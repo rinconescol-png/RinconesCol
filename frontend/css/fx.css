@@ -1,0 +1,84 @@
+/* fx.css — animaciones y efectos (lo activa js/fx.js). Todo respeta prefers-reduced-motion. */
+
+/* Barra de progreso de scroll */
+.fx-progreso { position: fixed; top: 0; left: 0; height: 2px; width: 100%; z-index: 300;
+  background: var(--oro-grad); transform: scaleX(0); transform-origin: left; pointer-events: none; }
+
+/* Aparición al hacer scroll */
+.fx-reveal { opacity: 0; transform: translateY(46px) scale(.985); filter: blur(6px);
+  transition: opacity 1s var(--ease-out), transform 1.1s var(--ease-out), filter .9s var(--ease-out);
+  transition-delay: var(--fx-delay, 0s); will-change: transform, opacity; }
+.fx-reveal.fx-visto { opacity: 1; transform: none; filter: none; }
+.fx-reveal-izq { transform: translateX(-60px); }
+.fx-reveal-der { transform: translateX(60px); }
+.fx-reveal-izq.fx-visto, .fx-reveal-der.fx-visto { transform: none; }
+
+/* Imágenes que se "destapan" */
+.fx-destapar { clip-path: inset(0 0 100% 0); transition: clip-path 1.4s var(--ease-out); transition-delay: var(--fx-delay, 0s); }
+.fx-destapar.fx-visto { clip-path: inset(0 0 0 0); }
+
+/* Titulares palabra por palabra */
+.fx-palabra { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: .12em; margin-bottom: -.12em; }
+.fx-palabra > span { display: inline-block; transform: translateY(110%) rotate(4deg);
+  animation: fx-palabra 1.1s var(--ease-out) forwards; animation-delay: calc(.15s + var(--i) * .09s); }
+@keyframes fx-palabra { to { transform: none; } }
+
+/* Tilt 3D en tarjetas */
+.fx-tilt { transform-style: preserve-3d; transition: transform .25s var(--ease), opacity 1s var(--ease-out), filter .9s var(--ease-out), box-shadow .3s, border-color .3s; transition-delay: var(--fx-delay, 0s), var(--fx-delay, 0s), var(--fx-delay, 0s), 0s, 0s; }
+.fx-tilt.fx-tilt-activo { transition: transform .08s linear, box-shadow .3s, border-color .3s; }
+.fx-brillo { position: absolute; inset: 0; pointer-events: none; z-index: 3; opacity: 0; transition: opacity .3s;
+  background: radial-gradient(380px circle at var(--mx,50%) var(--my,50%), rgba(240,214,154,.16), transparent 60%); }
+.fx-tilt:hover .fx-brillo { opacity: 1; }
+
+/* Botones magnéticos + destello */
+.boton { will-change: transform; }
+.boton-primario::after { content: ""; position: absolute; top: 0; left: -80%; width: 50%; height: 100%;
+  background: linear-gradient(100deg, transparent, rgba(255,255,255,.55), transparent); transform: skewX(-20deg); transition: left .7s var(--ease-out); }
+.boton-primario:hover::after { left: 130%; }
+
+/* Cursor con halo dorado (solo mouse) */
+.fx-cursor { position: fixed; top: 0; left: 0; width: 34px; height: 34px; margin: -17px 0 0 -17px; border-radius: 50%;
+  border: 1px solid var(--oro); pointer-events: none; z-index: 400; opacity: 0;
+  transition: width .3s var(--ease), height .3s var(--ease), margin .3s var(--ease), background .3s, opacity .3s; mix-blend-mode: normal; }
+.fx-cursor.fx-cursor-on { opacity: .9; }
+.fx-cursor.fx-cursor-grande { width: 64px; height: 64px; margin: -32px 0 0 -32px; background: rgba(214,178,106,.14); }
+@media (hover: none), (pointer: coarse) { .fx-cursor { display: none; } }
+
+/* Transición entre páginas */
+.fx-telon { position: fixed; inset: 0; z-index: 500; background: #070605; pointer-events: none;
+  transform: translateY(0); }
+.fx-telon::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: var(--oro);
+  transform: scaleX(0); transition: transform .6s var(--ease-out); }
+body.fx-listo .fx-telon { animation: fx-telon-salir .9s var(--ease-out) forwards; }
+body.fx-saliendo .fx-telon { animation: fx-telon-entrar .5s var(--ease-out) forwards; }
+body.fx-saliendo .fx-telon::after { transform: scaleX(1); }
+@keyframes fx-telon-salir { from { transform: translateY(0); } to { transform: translateY(-100%); } }
+@keyframes fx-telon-entrar { from { transform: translateY(100%); } to { transform: translateY(0); } }
+
+/* Flotación suave en iconos y sellos */
+.tarjeta-feature .icono { animation: fx-flota 5s ease-in-out infinite; }
+@keyframes fx-flota { 50% { transform: translateY(-5px); } }
+
+/* Línea dorada que se dibuja bajo los títulos de sección */
+.seccion-titulo h2::after, .seccion-cabecera h2::after { content: ""; display: block; width: 72px; height: 1px; margin-top: 18px;
+  background: var(--oro-grad); transform: scaleX(0); transform-origin: left; transition: transform 1.2s var(--ease-out) .3s; }
+.seccion-titulo.fx-visto h2::after, .seccion-cabecera.fx-visto h2::after { transform: scaleX(1); }
+
+/* Marquee decorativo del hero interno */
+.hero-interno::before { content: ""; position: absolute; width: 520px; height: 520px; right: -160px; top: -200px; border-radius: 50%;
+  border: 1px solid rgba(214,178,106,.25); animation: fx-gira 40s linear infinite; }
+.hero-interno::after { content: ""; position: absolute; width: 340px; height: 340px; right: -60px; top: -100px; border-radius: 50%;
+  border: 1px dashed rgba(214,178,106,.2); animation: fx-gira 28s linear infinite reverse; }
+@keyframes fx-gira { to { transform: rotate(360deg); } }
+.hero-interno > .contenedor { position: relative; z-index: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .fx-reveal, .fx-destapar { opacity: 1 !important; transform: none !important; filter: none !important; clip-path: none !important; }
+  .fx-palabra > span { transform: none !important; }
+  .fx-telon, .fx-cursor, .fx-progreso { display: none !important; }
+}
+
+/* Línea decorativa centrada cuando el título está centrado */
+.seccion-titulo h2::after { margin-inline: auto; }
+.footer-redes a { color: var(--oro-claro); }
+.footer-redes a i, .footer-redes a svg { color: inherit; }

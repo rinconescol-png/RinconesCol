@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RinconesCol · Iniciar sesión</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Fraunces:wght@500;600;700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/fx.css" />
+  <link rel="stylesheet" href="css/login.css" />
+</head>
+<body>
+
+  <nav class="navbar">  
+    <div class="contenedor">
+      <a href="index.html" class="logo">
+        <img src="img/logo4.jpg" alt="Logo RinconesCol" />
+      </a>
+      <div class="nav-enlaces"></div>
+      <div class="navbar-acciones">
+        <a href="index.html" class="boton boton-secundario">Volver al inicio</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="pantalla-formulario">
+    <div class="caja-formulario">
+      <h1>Iniciar Sesión</h1>
+      <p>Accede a tu cuenta para guardar tus destinos favoritos, descubrir nuevos rincones de Colombia y recibir recomendaciones personalizadas.</p>
+
+      <div class="mensaje-error" id="error-login"></div>
+
+      <form id="form-login">
+        <div class="campo">
+          <label for="login-correo">Correo</label>
+          <input type="email" id="login-correo" placeholder="tucorreo@ejemplo.com" required />
+        </div>
+        <div class="campo">
+          <label for="login-clave">Contraseña</label>
+          <input type="password" id="login-clave" placeholder="••••••••" required />
+        </div>
+        <p class="enlace-alterno" style="text-align:right; margin-top:-8px;">
+          <a href="olvide-contrasena.html">¿Olvidaste tu contraseña?</a>
+        </p>
+        <button type="submit" class="boton boton-primario boton-ancho">Ingresar</button>
+      </form>
+
+      <p class="enlace-alterno" id="enlace-alterno-registro">¿No tienes una cuenta? <a href="registro.html" id="enlace-a-registro">Crear una cuenta</a></p>
+    </div>
+  </div>
+
+  <script src="js/auth.js"></script>
+  <script>
+
+    const parametros = new URLSearchParams(window.location.search);
+    const redirigirA = parametros.get("redirect") || "home.html";
+
+
+    document.getElementById("enlace-a-registro").href =
+      "registro.html?redirect=" + encodeURIComponent(redirigirA);
+
+
+    if (usuarioActual()) {
+      window.location.href = redirigirA;
+    }
+
+    // ── Inicio de sesión ─────────────────────────────────────────────────
+    // El usuario solo ingresa correo y contraseña. El rol (turista, socio,
+    // admin, u otro que exista en la BD) lo determina exclusivamente el
+    // backend consultando la tabla "usuarios" (ver AuthService.login en
+    // services/auth_service.py) y viene dentro de la respuesta del login.
+    // Aquí simplemente leemos ese rol y redirigimos a la interfaz que le
+    // corresponde; nunca se pregunta ni se asume el rol desde el frontend.
+    document.getElementById("form-login").addEventListener("submit", function (evento) {
+      evento.preventDefault();
+      const correo = document.getElementById("login-correo").value.trim();
+      const clave = document.getElementById("login-clave").value;
+      const cajaError = document.getElementById("error-login");
+
+      const resultado = iniciarSesion(correo, clave);
+
+      if (!resultado.ok) {
+        cajaError.textContent = resultado.error;
+        cajaError.classList.add("visible");
+        return;
+      }
+
+      const usuario = usuarioActual();
+      const rolReal = usuario ? usuario.rol : null;
+
+      if (rolReal === "admin") {
+        window.location.href = "panel-admin.html";
+      } else if (rolReal === "socio") {
+        window.location.href = "panel-socio.html";
+      } else {
+        // Turista, visitante, o cualquier otro rol sin panel dedicado:
+        // sigue el flujo normal (a la página que originó el login, o home).
+        window.location.href = redirigirA;
+      }
+    });
+  </script>
+  <script src="js/nav.js" defer></script>
+  <script src="js/fx.js" defer></script>
+</body>
+</html>

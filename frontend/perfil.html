@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RinconesCol · Mi perfil</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Fraunces:wght@500;600;700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/fx.css" />
+  <link rel="stylesheet" href="css/perfil.css" />
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="contenedor">
+      <a href="home.html" class="logo">
+        <img src="img/logo4.jpg" alt="Logo RinconesCol" />
+      </a>
+      <div class="nav-enlaces">
+        <a href="home.html">Inicio</a>
+        <a href="destinos.html">Destinos</a>
+        <a href="contacto.html">Contacto</a>
+        <a href="negocio.html">Negocios</a>
+      </div>
+      <div class="nav-usuario">
+        Hola, <strong id="nombre-usuario">viajero</strong>
+        <span class="enlace-salir" onclick="cerrarSesion()">Salir</span>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero-interno hero-perfil">
+    <div class="contenedor">
+      <h1>Tu perfil</h1>
+      <p>Aquí puedes ver y actualizar tu nombre y tu foto de perfil. Esta información es solo tuya: nadie más puede editarla.</p>
+    </div>
+  </header>
+
+  <div class="contenedor perfil-contenido">
+
+    <div class="mensaje-error" id="error-perfil"></div>
+    <div class="mensaje-exito" id="exito-perfil">Perfil actualizado correctamente.</div>
+
+    <div id="cargando-perfil" class="estado-carga">Cargando tu perfil…</div>
+
+    <div id="contenido-perfil" style="display:none;">
+      <section class="tarjeta-panel tarjeta-perfil">
+
+        <!-- ── Vista de solo lectura ── -->
+        <div id="vista-perfil" class="vista-perfil">
+          <div class="avatar-perfil" id="avatar-vista"></div>
+          <div class="datos-perfil">
+            <span class="chip-categoria" id="perfil-rol">Rol</span>
+            <h2 id="perfil-nombre">Nombre del usuario</h2>
+            <p class="perfil-correo" id="perfil-correo"></p>
+          </div>
+          <button type="button" class="boton boton-primario" id="boton-editar-perfil">Editar perfil</button>
+        </div>
+
+        <!-- ── Formulario de edición ── -->
+        <form id="formulario-perfil" class="formulario-perfil" style="display:none;">
+          <div class="avatar-perfil avatar-perfil-formulario" id="avatar-formulario"></div>
+
+          <div class="campo">
+            <label for="input-nombre">Nombre</label>
+            <input type="text" id="input-nombre" placeholder="Tu nombre completo" required />
+          </div>
+
+          <div class="campo campo-foto">
+            <label for="input-foto">Foto de perfil</label>
+            <input type="file" id="input-foto" accept="image/png, image/jpeg, image/webp, image/gif" />
+            <p class="texto-ayuda">Formatos válidos: JPG, PNG, WEBP o GIF. Tamaño máximo: 2 MB. Si no eliges una foto nueva, se conserva la actual.</p>
+          </div>
+
+          <div class="acciones-formulario-perfil">
+            <button type="submit" class="boton boton-primario">Guardar cambios</button>
+            <button type="button" class="boton boton-secundario" id="boton-cancelar-perfil">Cancelar</button>
+          </div>
+        </form>
+
+      </section>
+    </div>
+  </div>
+
+  <footer>
+    <div class="contenedor footer-grid">
+      <div class="footer-marca">
+        <a href="index.html" class="logo">
+          <img src="img/logo4.jpg" alt="Logo RinconesCol" />
+          Rincones<span>COL</span>
+        </a>
+        <p class="footer-tagline">Turismo • Gastronomía • Pueblos</p>
+      </div>
+
+      <div class="footer-columna">
+        <h4>Información</h4>
+        <a href="privacidad.html">Política de Privacidad</a>
+        <a href="terminos.html">Términos y Condiciones</a>
+      </div>
+
+      <div class="footer-columna">
+        <h4>Descubre más de Colombia</h4>
+        <div class="footer-redes">
+          <a href="https://www.facebook.com/" target="_blank" rel="noopener" aria-label="Facebook">📘</a>
+          <a href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="Instagram">📷</a>
+          <a href="https://www.tiktok.com/" target="_blank" rel="noopener" aria-label="TikTok">🎵</a>
+        </div>
+        <p class="footer-idioma">🇨🇴 Español (Colombia)</p>
+      </div>
+    </div>
+
+    <div class="footer-inferior">
+      © 2026 RinconesCol | Todos los derechos reservados
+    </div>
+  </footer>
+
+  <script src="js/auth.js"></script>
+  <script src="js/perfil.js"></script>
+  <script src="js/nav.js" defer></script>
+  <script src="js/fx.js" defer></script>
+</body>
+</html>

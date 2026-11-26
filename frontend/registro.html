@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RinconesCol · Crear cuenta</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Fraunces:wght@500;600;700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/fx.css" />
+  <link rel="stylesheet" href="css/registro.css" />
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="contenedor">
+      <a href="index.html" class="logo">
+        <img src="img/logo4.jpg" alt="Logo RinconesCol" />
+      </a>
+      <div class="nav-enlaces"></div>
+      <div class="navbar-acciones">
+        <a href="index.html" class="boton boton-secundario">Volver al inicio</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="pantalla-formulario">
+    <div class="caja-formulario">
+      <h1>Crear cuenta</h1>
+      <p>Regístrate para guardar tus destinos favoritos y empezar a descubrir los rincones de Colombia.</p>
+
+      <div class="mensaje-error" id="error-registro"></div>
+
+      <form id="form-registro">
+        <div class="campo">
+          <label for="registro-nombre">Nombre</label>
+          <input type="text" id="registro-nombre" placeholder="Tu nombre" required />
+        </div>
+        <div class="campo">
+          <label for="registro-correo">Correo</label>
+          <input type="email" id="registro-correo" placeholder="tucorreo@ejemplo.com" required />
+        </div>
+        <div class="campo">
+          <label for="registro-clave">Contraseña</label>
+          <input type="password" id="registro-clave" placeholder="Mínimo 8 caracteres" required minlength="8" />
+          <ul class="lista-requisitos" id="lista-requisitos">
+            <li id="req-longitud">Mínimo 8 caracteres</li>
+            <li id="req-mayuscula">letras mayúscula</li>
+            <li id="req-numero">números</li>
+            <li id="req-especial">carácteres especiales (!@#$%^&*)</li>
+          </ul>
+        </div>
+        <button type="submit" class="boton boton-primario boton-ancho">Crear cuenta</button>
+      </form>
+
+      <p class="enlace-alterno">¿Ya tienes una cuenta? <a href="login.html" id="enlace-a-login">Iniciar sesión</a></p>
+    </div>
+  </div>
+
+  <script src="js/auth.js"></script>
+  <script>
+    const parametros = new URLSearchParams(window.location.search);
+    const redirigirA = parametros.get("redirect") || "home.html";
+
+    document.getElementById("enlace-a-login").href =
+      "login.html?redirect=" + encodeURIComponent(redirigirA);
+
+    if (usuarioActual()) {
+      window.location.href = redirigirA;
+    }
+
+    // Expresión regular con los 4 requisitos
+    const regexClave = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>_\-]).{8,}$/;
+
+    const campoClave = document.getElementById("registro-clave");
+
+    // Validación visual en tiempo real
+    campoClave.addEventListener("input", function () {
+      const clave = this.value;
+
+      document.getElementById("req-longitud").classList.toggle("valido", clave.length >= 8);
+      document.getElementById("req-mayuscula").classList.toggle("valido", /[A-Z]/.test(clave));
+      document.getElementById("req-numero").classList.toggle("valido", /\d/.test(clave));
+      document.getElementById("req-especial").classList.toggle("valido", /[!@#$%^&*(),.?":{}|<>_\-]/.test(clave));
+    });
+
+    document.getElementById("form-registro").addEventListener("submit", function (evento) {
+      evento.preventDefault();
+      const nombre = document.getElementById("registro-nombre").value.trim();
+      const correo = document.getElementById("registro-correo").value.trim();
+      const clave = campoClave.value;
+      const cajaError = document.getElementById("error-registro");
+      cajaError.classList.remove("visible");
+
+      // Validación de la contraseña antes de registrar
+      if (!regexClave.test(clave)) {
+        cajaError.textContent = "La contraseña debe tener mínimo 8 caracteres, mayúsculas, números y  carácteres especiales.";
+        cajaError.classList.add("visible");
+        return;
+      }
+
+      const resultado = registrarUsuario(nombre, correo, clave);
+
+      if (resultado.ok) {
+        iniciarSesion(correo, clave);
+        window.location.href = redirigirA;
+      } else {
+        cajaError.textContent = resultado.error;
+        cajaError.classList.add("visible");
+      }
+    });
+  </script>
+  <script src="js/nav.js" defer></script>
+  <script src="js/fx.js" defer></script>
+</body>
+</html>

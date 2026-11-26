@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RinconesCol · Panel de Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Fraunces:wght@500;600;700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/fx.css" />
+  <link rel="stylesheet" href="css/panel-admin.css" />
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="contenedor">
+      <a href="home.html" class="logo">
+        <img src="img/logo4.jpg" alt="Logo RinconesCol" />
+      </a>
+      <div class="nav-enlaces">
+        <a href="home.html">Inicio</a>
+        <a href="panel-admin.html" class="activo">Panel Admin</a>
+      </div>
+      <div class="nav-usuario">
+        Hola, <strong id="nombre-usuario">admin</strong>
+        <span class="enlace-salir" onclick="cerrarSesion()">Salir</span>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero-interno hero-panel-admin">
+    <div class="contenedor">
+      <h1>Solicitudes de convenio</h1>
+      <p>Revisa las solicitudes que enviaron los negocios, confirma a qué pueblo y categoría quedan asociadas, y apruébalas o recházalas.</p>
+    </div>
+  </header>
+
+  <div class="contenedor panel-admin-contenido">
+
+    <div class="mensaje-error" id="error-panel"></div>
+    <div class="mensaje-exito" id="exito-panel">Cambios guardados correctamente.</div>
+
+    <div class="filtros-estado" id="filtros-estado">
+      <button type="button" class="filtro-chip activo" data-estado="pendiente">Pendientes</button>
+      <button type="button" class="filtro-chip" data-estado="aprobado">Aprobadas</button>
+      <button type="button" class="filtro-chip" data-estado="rechazado">Rechazadas</button>
+      <button type="button" class="filtro-chip" data-estado="todas">Todas</button>
+    </div>
+
+    <div id="cargando-solicitudes" class="estado-carga">Cargando solicitudes…</div>
+
+    <div id="sin-solicitudes" class="estado-carga" style="display:none;">
+      No hay solicitudes en este estado.
+    </div>
+
+    <div id="lista-solicitudes" class="lista-solicitudes"></div>
+
+  </div>
+
+  <template id="plantilla-solicitud">
+    <article class="tarjeta-solicitud">
+      <div class="tarjeta-solicitud-encabezado">
+        <div>
+          <span class="chip-estado" data-campo="estado">pendiente</span>
+          <h2 data-campo="nombre_negocio">Nombre del negocio</h2>
+          <p class="texto-ayuda" data-campo="fecha_envio">Enviado el —</p>
+        </div>
+      </div>
+
+      <dl class="detalle-solicitud">
+        <div><dt>Propietario</dt><dd data-campo="propietario"></dd></div>
+        <div><dt>Tipo de negocio</dt><dd data-campo="tipo_negocio"></dd></div>
+        <div><dt>Pueblo/región (según el negocio)</dt><dd data-campo="pueblo"></dd></div>
+        <div><dt>Correo</dt><dd data-campo="correo"></dd></div>
+        <div><dt>Teléfono</dt><dd data-campo="telefono"></dd></div>
+      </dl>
+      <p class="mensaje-solicitud" data-campo="mensaje"></p>
+
+      <div class="acciones-aprobar" data-campo="acciones-aprobar">
+        <div class="fila-aprobar">
+          <label>
+            Pueblo real
+            <select data-campo="select-pueblo"></select>
+          </label>
+          <label>
+            Categoría
+            <select data-campo="select-categoria">
+              <option value="restaurante">Restaurante</option>
+              <option value="hotel">Hotel / Posada</option>
+              <option value="cafeteria">Cafetería</option>
+              <option value="experiencia">Experiencia turística</option>
+              <option value="artesania">Artesanías / Emprendimiento</option>
+            </select>
+          </label>
+        </div>
+        <div class="fila-botones">
+          <button type="button" class="boton boton-primario" data-accion="aprobar">Aprobar</button>
+          <button type="button" class="boton boton-rechazar" data-accion="rechazar">Rechazar</button>
+        </div>
+      </div>
+    </article>
+  </template>
+
+  <script src="js/auth.js"></script>
+  <script>
+
+    if (protegerPaginaAdmin()) {
+      mostrarNombreUsuario();
+    }
+
+    const cajaError = document.getElementById("error-panel");
+    const cajaExito = document.getElementById("exito-panel");
+    const cargando = document.getElementById("cargando-solicitudes");
+    const sinSolicitudes = document.getElementById("sin-solicitudes");
+    const listaEl = document.getElementById("lista-solicitudes");
+    const plantilla = document.getElementById("plantilla-solicitud");
+
+    let todasLasSolicitudes = [];
+    let pueblosDisponibles = [];
+    let filtroActual = "pendiente";
+
+    function mostrarError(msg) {
+      cajaExito.classList.remove("visible");
+      cajaError.textContent = msg;
+      cajaError.classList.add("visible");
+    }
+
+    function mostrarExito(msg) {
+      cajaError.classList.remove("visible");
+      cajaExito.textContent = msg || "Cambios guardados correctamente.";
+      cajaExito.classList.add("visible");
+      setTimeout(function () { cajaExito.classList.remove("visible"); }, 4000);
+    }
+
+    function cargarPueblos() {
+      const respuesta = peticionSincrona("GET", "/pueblos/");
+      if (respuesta.body && respuesta.body.success) {
+        pueblosDisponibles = respuesta.body.data || [];
+      } else {
+        pueblosDisponibles = [];
+      }
+    }
+
+    function renderizarSolicitudes() {
+      listaEl.innerHTML = "";
+
+      const filtradas = filtroActual === "todas"
+        ? todasLasSolicitudes
+        : todasLasSolicitudes.filter(function (s) { return s.estado === filtroActual; });
+
+      if (filtradas.length === 0) {
+        sinSolicitudes.style.display = "";
+        return;
+      }
+      sinSolicitudes.style.display = "none";
+
+      filtradas.forEach(function (solicitud) {
+        const nodo = plantilla.content.cloneNode(true);
+        const tarjeta = nodo.querySelector(".tarjeta-solicitud");
+
+        tarjeta.querySelector('[data-campo="estado"]').textContent = solicitud.estado;
+        tarjeta.querySelector('[data-campo="estado"]').classList.add("chip-" + solicitud.estado);
+        tarjeta.querySelector('[data-campo="nombre_negocio"]').textContent = solicitud.nombre_negocio;
+        tarjeta.querySelector('[data-campo="fecha_envio"]').textContent = solicitud.fecha_envio
+          ? "Enviado el " + new Date(solicitud.fecha_envio).toLocaleString("es-CO")
+          : "";
+        tarjeta.querySelector('[data-campo="propietario"]').textContent = solicitud.propietario;
+        tarjeta.querySelector('[data-campo="tipo_negocio"]').textContent = solicitud.tipo_negocio;
+        tarjeta.querySelector('[data-campo="pueblo"]').textContent = solicitud.pueblo;
+        tarjeta.querySelector('[data-campo="correo"]').textContent = solicitud.correo;
+        tarjeta.querySelector('[data-campo="telefono"]').textContent = solicitud.telefono;
+
+        const cajaMensaje = tarjeta.querySelector(".mensaje-solicitud");
+        if (solicitud.mensaje) {
+          cajaMensaje.textContent = solicitud.mensaje;
+        } else {
+          cajaMensaje.style.display = "none";
+        }
+
+        const bloqueAcciones = tarjeta.querySelector('[data-campo="acciones-aprobar"]');
+
+        if (solicitud.estado !== "pendiente") {
+          bloqueAcciones.style.display = "none";
+        } else {
+          const selectPueblo = tarjeta.querySelector('[data-campo="select-pueblo"]');
+          selectPueblo.innerHTML = "";
+          pueblosDisponibles.forEach(function (p) {
+            const opcion = document.createElement("option");
+            opcion.value = p.pueblo_id;
+            opcion.textContent = p.nombre;
+            selectPueblo.appendChild(opcion);
+          });
+
+          const selectCategoria = tarjeta.querySelector('[data-campo="select-categoria"]');
+
+          tarjeta.querySelector('[data-accion="aprobar"]').addEventListener("click", function () {
+            if (pueblosDisponibles.length === 0) {
+              mostrarError("No hay pueblos registrados todavía; crea un pueblo antes de aprobar convenios.");
+              return;
+            }
+            const puebloId = parseInt(selectPueblo.value, 10);
+            const categoria = selectCategoria.value;
+            const btn = this;
+            btn.disabled = true;
+            btn.textContent = "Aprobando…";
+            const resultado = aprobarSolicitudConvenio(solicitud.id, puebloId, categoria);
+            if (!resultado.ok) {
+              mostrarError(resultado.error);
+              btn.disabled = false;
+              btn.textContent = "Aprobar";
+              return;
+            }
+            mostrarExito("Solicitud aprobada: el negocio ya puede iniciar sesión como Socio.");
+            cargarSolicitudes();
+          });
+
+          tarjeta.querySelector('[data-accion="rechazar"]').addEventListener("click", function () {
+            const btn = this;
+            btn.disabled = true;
+            btn.textContent = "Rechazando…";
+            const resultado = rechazarSolicitudConvenio(solicitud.id);
+            if (!resultado.ok) {
+              mostrarError(resultado.error);
+              btn.disabled = false;
+              btn.textContent = "Rechazar";
+              return;
+            }
+            mostrarExito("Solicitud rechazada.");
+            cargarSolicitudes();
+          });
+        }
+
+        listaEl.appendChild(nodo);
+      });
+    }
+
+    function cargarSolicitudes() {
+      cargando.style.display = "";
+      sinSolicitudes.style.display = "none";
+      listaEl.innerHTML = "";
+
+      cargarPueblos();
+
+      const resultado = obtenerSolicitudesConvenio();
+      cargando.style.display = "none";
+
+      if (!resultado.ok) {
+        mostrarError(resultado.error || "No se pudieron cargar las solicitudes.");
+        return;
+      }
+
+      todasLasSolicitudes = resultado.data || [];
+      renderizarSolicitudes();
+    }
+
+    document.querySelectorAll(".filtro-chip").forEach(function (chip) {
+      chip.addEventListener("click", function () {
+        document.querySelectorAll(".filtro-chip").forEach(function (c) { c.classList.remove("activo"); });
+        chip.classList.add("activo");
+        filtroActual = chip.dataset.estado;
+        renderizarSolicitudes();
+      });
+    });
+
+    cargarSolicitudes();
+  </script>
+  <script src="js/nav.js" defer></script>
+  <script src="js/fx.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+/*home.css — solo estilos de home.html */
+
+.home-hero-botones { margin-top: 24px; display: flex; gap: 14px; flex-wrap: wrap; }
+.home-hero-botones .boton-claro { background: var(--titulo); color: var(--tinta); }
+.home-hero-botones .boton-secundario { border-color: var(--oro); color: var(--oro-claro); }
+
+.seccion-cabecera {
+  padding-top: 56px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+.seccion-cabecera a { color: var(--titulo); font-weight: 600; }

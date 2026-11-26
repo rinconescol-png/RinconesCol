@@ -1,0 +1,186 @@
+/* index.css — solo estilos de la página de inicio (index.html) */
+
+.hero-landing {
+  position: relative;
+  min-height: 86vh;
+  display: flex;
+  align-items: center;
+  background:
+    linear-gradient(180deg, rgba(27,75,102,0.55), rgba(20,30,25,0.62)),
+    url("../img/Paisajep.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.hero-landing-texto {
+  color: var(--blanco);
+  max-width: 720px;
+  text-align: center;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.hero-landing-texto h1 {
+  color: var(--blanco);
+  font-size: clamp(2.4rem, 5vw, 3.6rem);
+  margin-bottom: 18px;
+}
+
+.hero-landing-texto p {
+  font-size: 1.15rem;
+  color: rgba(255,255,255,0.9);
+  max-width: 560px;
+  margin: 0 auto 30px;
+}
+
+.hero-landing-botones { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+/* Entrada suave del texto del hero */
+.hero-landing-texto > * { animation: subir 0.8s var(--ease) both; }
+.hero-landing-texto > :nth-child(2) { animation-delay: 0.12s; }
+.hero-landing-texto > :nth-child(3) { animation-delay: 0.24s; }
+
+
+.seccion { padding: 90px 0; }
+.seccion-titulo { text-align: center; max-width: 620px; margin: 0 auto 50px; }
+.seccion-titulo h2 { font-size: 2.1rem; margin-bottom: 12px; }
+.seccion-titulo p { color: var(--texto-suave); }
+
+/* Galería de columnas con efecto hover-to-video, debajo del texto
+   descriptivo de "¿Qué encontrarás en RinconesCol?" */
+.galeria-explora {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+  margin-bottom: 56px;
+}
+.galeria-explora-col { display: flex; flex-direction: column; gap: 14px; }
+
+.galeria-explora-media {
+  position: relative;
+  border-radius: var(--radio);
+  overflow: hidden;
+  box-shadow: var(--sombra);
+  aspect-ratio: 3 / 4;
+  background: var(--texto);
+}
+.galeria-explora-media video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.35s ease;
+}
+.galeria-explora-media:hover video { transform: scale(1.05); }
+
+.galeria-explora-col h3 { font-size: 1.05rem; text-align: center; }
+
+@media (max-width: 980px) {
+  .galeria-explora { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 560px) {
+  .galeria-explora { grid-template-columns: 1fr; }
+}
+
+
+.rejilla-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 26px;
+}
+
+.tarjeta-feature {
+  background: var(--blanco);
+  border-radius: var(--radio);
+  padding: 32px 26px;
+  box-shadow: var(--sombra);
+  text-align: left;
+}
+.tarjeta-feature .icono {
+  width: 52px; height: 52px;
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem;
+  background: var(--crema);
+  margin-bottom: 18px;
+}
+.tarjeta-feature h3 { font-size: 1.15rem; margin-bottom: 8px; }
+.tarjeta-feature p { color: var(--texto-suave); font-size: 0.92rem; }
+
+
+.seccion-nosotros { background: var(--blanco); }
+.nosotros-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: center;
+}
+.nosotros-imagen { border-radius: var(--radio); overflow: hidden; box-shadow: var(--sombra); }
+.nosotros-imagen img { height: 100%; object-fit: cover; }
+.nosotros-texto h2 { font-size: 2rem; margin-bottom: 16px; }
+.nosotros-texto p { color: var(--texto-suave); margin-bottom: 16px; }
+
+
+.seccion-comparte {
+  background: linear-gradient(135deg, var(--verde-monte), var(--azul-profundo));
+  color: var(--blanco);
+  text-align: center;
+}
+.seccion-comparte .eyebrow {
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  color: var(--verde-claro);
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.seccion-comparte h2 { color: var(--blanco); font-size: 2.1rem; margin-bottom: 8px; }
+.hashtag {
+  font-family: var(--fuente-titulo);
+  font-size: 1.3rem;
+  color: #F2C879;
+  margin-bottom: 18px;
+}
+.seccion-comparte > .contenedor > p {
+  max-width: 560px; margin: 0 auto 40px;
+  color: rgba(255,255,255,0.9);
+}
+
+.galeria-comparte {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+.galeria-comparte img {
+  width: 100%; height: 190px; object-fit: cover;
+  border-radius: 14px;
+  box-shadow: var(--sombra-sm);
+}
+.galeria-comparte div:nth-child(2) { margin-top: 24px; }
+.galeria-comparte div:nth-child(4) { margin-top: 24px; }
+
+
+.seccion-negocio {
+  background: var(--crema);
+}
+.negocio-caja {
+  background: var(--blanco);
+  border-radius: var(--radio-lg);
+  box-shadow: var(--sombra);
+  padding: 56px;
+  display: grid;
+  grid-template-columns: 1.4fr auto;
+  gap: 40px;
+  align-items: center;
+}
+.negocio-caja h2 { font-size: 1.8rem; margin-bottom: 14px; }
+.negocio-caja p { color: var(--texto-suave); margin-bottom: 10px; }
+
+
+@media (max-width: 900px) {
+  .nosotros-grid { grid-template-columns: 1fr; }
+  .nosotros-imagen { order: -1; height: 280px; }
+  .galeria-comparte { grid-template-columns: repeat(2, 1fr); }
+  .negocio-caja { grid-template-columns: 1fr; text-align: center; }
+}

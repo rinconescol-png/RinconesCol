@@ -1,0 +1,175 @@
+  <!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RinconesCol · Contáctanos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Fraunces:wght@500;600;700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/fx.css" />
+  <link rel="stylesheet" href="css/contacto.css" />
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="contenedor">
+      <a href="index.html" class="logo" id="logo-link">
+        <img src="img/logo4.jpg" alt="Logo RinconesCol" />
+      </a>
+      <div class="nav-enlaces" id="nav-enlaces">
+        <a href="index.html">Inicio</a>
+        <a href="nosotros.html">Quiénes somos</a>
+        <a href="negocio.html">Negocios</a>
+        <a href="contacto.html" class="activo">Contacto</a>
+      </div>
+      <div class="navbar-acciones" id="navbar-acciones">
+        <a href="login.html" class="boton boton-secundario">Iniciar sesión</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero-interno">
+    <div class="contenedor">
+      <h1>Contáctanos</h1>
+      <p>¿Tienes una recomendación, una experiencia para compartir o deseas colaborar con RinconesCol? Nos encantaría conocer tu historia.</p>
+    </div>
+  </header>
+
+  <section class="contenedor contacto-grid">
+    <div class="contacto-info">
+      <h2>Información</h2>
+
+      <div class="dato-contacto">
+        <div class="icono">✉️</div>
+        <div><strong>Correo</strong><span>RinconesCol@gmail.com</span></div>
+      </div>
+
+      <div class="dato-contacto">
+        <div class="icono">📞</div>
+        <div><strong>Teléfono</strong><span>+57 305 236 9751</span></div>
+      </div>
+
+      <div class="dato-contacto">
+        <div class="icono">📍</div>
+        <div><strong>Ubicación</strong><span>Colombia</span></div>
+      </div>
+
+      <div class="caja-atencion">
+        <strong>Atención 24/7</strong>
+        <p>Estamos disponibles todos los días para ayudarte a descubrir los mejores rincones de Colombia.</p>
+      </div>
+    </div>
+
+    <div class="contacto-formulario">
+      <div class="mensaje-exito" id="exito-contacto">¡Tu mensaje fue enviado con éxito! Te responderemos pronto.</div>
+      <form id="form-contacto">
+        <div class="campo">
+          <label for="contacto-nombre">Nombre</label>
+          <input type="text" id="contacto-nombre" placeholder="Tu nombre" required />
+        </div>
+        <div class="campo">
+          <label for="contacto-correo">Correo</label>
+          <input type="email" id="contacto-correo" placeholder="tucorreo@ejemplo.com" required />
+        </div>
+        <div class="campo">
+          <label for="contacto-mensaje">Mensaje</label>
+          <textarea id="contacto-mensaje" placeholder="Cuéntanos tu recomendación o experiencia" required></textarea>
+        </div>
+        <button type="submit" class="boton boton-primario boton-ancho">Enviar mensaje</button>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <div class="contenedor footer-grid">
+      <div class="footer-marca">
+        <a href="index.html" class="logo">
+          <img src="img/logo4.jpg" alt="Logo RinconesCol" />
+          Rincones<span>COL</span>
+        </a>
+        <p class="footer-tagline">Turismo • Gastronomía • Pueblos</p>
+      </div>
+      <div class="footer-columna">
+        <h4>Información</h4>
+        <a href="privacidad.html">Política de Privacidad</a>
+        <a href="terminos.html">Términos y Condiciones</a>
+      </div>
+      <div class="footer-columna">
+        <h4>Descubre más de Colombia</h4>
+        <div class="footer-redes">
+          <a href="https://www.facebook.com/" target="_blank" rel="noopener" aria-label="Facebook">📘</a>
+          <a href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="Instagram">📷</a>
+          <a href="https://www.tiktok.com/" target="_blank" rel="noopener" aria-label="TikTok">🎵</a>
+        </div>
+        <p class="footer-idioma">🇨🇴 Español (Colombia)</p>
+      </div>
+    </div>
+    <div class="footer-inferior">© 2026 RinconesCol | Todos los derechos reservados</div>
+  </footer>
+
+  <script src="js/auth.js"></script>
+  <script>
+
+
+    // Si hay sesión iniciada, se reemplaza la navbar pública (con botón
+    // "Iniciar sesión") por la misma navbar de las páginas internas
+    // (home.html, destinos.html, etc.), y se usa mostrarNombreUsuario()
+    // -la misma función que usan todas las demás páginas- para que un
+    // Socio vea siempre su enlace "Mi negocio" y un Admin su "Panel Admin".
+    const usuario = usuarioActual();
+    if (usuario) {
+      document.getElementById("logo-link").href = "home.html";
+      document.getElementById("nav-enlaces").innerHTML = `
+        <a href="home.html">Inicio</a>
+        <a href="destinos.html">Destinos</a>
+        <a href="contacto.html" class="activo">Contacto</a>
+        <a href="negocio.html">Negocios</a>`;
+      document.getElementById("navbar-acciones").innerHTML = `
+        <div class="nav-usuario">
+          Hola, <strong id="nombre-usuario">${usuario.nombre}</strong>
+          <span class="enlace-salir" onclick="cerrarSesion()">Salir</span>
+        </div>`;
+      mostrarNombreUsuario();
+    }
+
+
+    document.getElementById("form-contacto").addEventListener("submit", async function (evento) {
+      evento.preventDefault();
+
+      if (!requerirSesion("contacto.html")) return;
+
+      const nombre = document.getElementById("contacto-nombre").value.trim();
+      const correo = document.getElementById("contacto-correo").value.trim();
+      const mensaje = document.getElementById("contacto-mensaje").value.trim();
+
+      const boton = this.querySelector("button[type=submit]");
+      boton.disabled = true;
+      boton.textContent = "Enviando...";
+
+      try {
+        const respuesta = await fetch(API_BASE_URL + "/contacto/", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ nombre, correo, mensaje })
+        });
+        const datos = await respuesta.json();
+
+        if (datos.success) {
+          document.getElementById("exito-contacto").classList.add("visible");
+          this.reset();
+        } else {
+          alert(datos.message || "No se pudo enviar el mensaje. Intenta de nuevo.");
+        }
+      } catch (error) {
+        alert("No se pudo conectar con el servidor. Verifica que el backend esté corriendo en " + API_BASE_URL);
+      } finally {
+        boton.disabled = false;
+        boton.textContent = "Enviar mensaje";
+      }
+    });
+  </script>
+  <script src="js/nav.js" defer></script>
+  <script src="js/fx.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RinconesCol · Destinos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Fraunces:wght@500;600;700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/fx.css" />
+  <link rel="stylesheet" href="css/destinos.css" />
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="contenedor">
+      <a href="home.html" class="logo">
+        <img src="img/logo4.jpg" alt="Logo RinconesCol" />
+      </a>
+      <div class="nav-enlaces">
+        <a href="home.html">Inicio</a>
+        <a href="destinos.html" class="activo">Destinos</a>
+        <a href="contacto.html">Contacto</a>
+        <a href="negocio.html">Negocios</a>
+      </div>
+      <div class="nav-usuario">
+        Hola, <strong id="nombre-usuario">viajero</strong>
+        <span class="enlace-salir" onclick="cerrarSesion()">Salir</span>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero-interno">
+    <div class="contenedor">
+      <h1>Pueblos para descubrir</h1>
+      <p>Cada destino tiene su propio sello: historia, colores y montañas distintas. Elige uno y planea tu viaje.</p>
+    </div>
+  </header>
+
+  <section class="contenedor">
+    <div class="rejilla" id="rejilla-destinos"></div>
+  </section>
+
+  <footer>
+    <div class="footer-inferior">RinconesCol · Turismo por los pueblos de Colombia · Proyecto académico</div>
+  </footer>
+
+  <script src="js/auth.js"></script>
+  <script src="js/data.js"></script>
+  <script>
+    protegerPagina();
+    mostrarNombreUsuario();
+
+    const rejilla = document.getElementById("rejilla-destinos");
+    DESTINOS.forEach(destino => {
+      rejilla.innerHTML += `
+        <a href="destino.html?id=${destino.id}" class="tarjeta">
+          <div class="tarjeta-imagen">
+            <img src="${destino.imagen}" alt="${destino.nombre}" />
+            <div class="sello-viajero">${destino.sello}</div>
+          </div>
+          <div class="tarjeta-cuerpo">
+            <div class="tarjeta-region">${destino.region}</div>
+            <h3>${destino.nombre}</h3>
+            <p>${destino.resumen}</p>
+            <span class="boton boton-secundario boton-ancho">Conoce más →</span>
+          </div>
+        </a>`;
+    });
+  </script>
+  <script src="js/nav.js" defer></script>
+  <script src="js/fx.js" defer></script>
+</body>
+</html>

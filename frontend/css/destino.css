@@ -1,0 +1,339 @@
+/* destino.css — solo estilos de destino.html (detalle de un pueblo)  */
+
+.detalle-hero {
+  height: 380px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+}
+.detalle-hero::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(8,7,6,0) 40%, rgba(8,7,6,0.92));
+}
+.detalle-hero-texto { position: relative; z-index: 1; padding: 32px 0; color: var(--claro); }
+.detalle-hero-texto h1 { color: var(--claro); font-size: 2.6rem; }
+.detalle-hero-region { color: var(--oro-claro); }
+
+.detalle-cuerpo { padding: 48px 0; display: grid; grid-template-columns: 2fr 1fr; gap: 48px; }
+.detalle-info h2 { margin-bottom: 12px; }
+.detalle-info p { color: var(--texto-suave); margin-bottom: 24px; }
+
+.detalle-lateral-col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-self: start;
+}
+
+.detalle-lateral {
+  background: var(--superficie);
+  border-radius: var(--radio);
+  padding: 24px;
+  box-shadow: var(--sombra);
+}
+.detalle-lateral h3 { font-size: 1.1rem; margin-bottom: 14px; }
+
+/* ── Cuadro llamativo "Atracciones y planes" ─────────────────────────────
+   Mismo estilo de tarjeta que el resto del sitio (radio, sombra), pero con
+   un color destacado (degradado verde-monte → azul-cielo) y un ícono, para
+   que sea imposible pasarlo por alto debajo de "Datos rápidos". */
+.tarjeta-atracciones {
+  display: block;
+  text-align: center;
+  background: linear-gradient(135deg, var(--verde-monte), var(--azul-cielo));
+  color: var(--claro);
+  border-radius: var(--radio);
+  padding: 26px 22px;
+  box-shadow: var(--sombra);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.tarjeta-atracciones:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 34px rgba(0,0,0,.6);
+}
+.tarjeta-atracciones i {
+  display: block;
+  font-size: 1.9rem;
+  margin-bottom: 10px;
+}
+.tarjeta-atracciones h3 {
+  color: var(--claro);
+  font-size: 1.1rem;
+  margin-bottom: 6px;
+}
+.tarjeta-atracciones p {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+.dato { display:flex; justify-content:space-between; padding: 10px 0; border-bottom: 1px solid rgba(214,178,106,0.12); font-size: 0.92rem; }
+.dato:last-of-type { border-bottom: none; }
+.dato span:first-child { color: var(--texto-suave); }
+.dato span:last-child { font-weight: 600; color: var(--titulo); }
+
+.lista-actividades { margin-top: 20px; list-style: none; margin-bottom: 24px; }
+.lista-actividades li {
+  padding: 10px 14px;
+  background: var(--superficie-2);
+  border-left: 3px solid var(--oro);
+  border-radius: 6px;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+}
+
+.dato-alcalde {
+  font-size: 0.85rem;
+  color: var(--texto-suave);
+  line-height: 1.5;
+}
+
+.lista-restaurantes { display: grid; gap: 14px; margin-top: 16px; }
+.tarjeta-restaurante {
+  background: var(--superficie);
+  border-radius: 12px;
+  padding: 18px 20px;
+  box-shadow: var(--sombra);
+}
+.tarjeta-restaurante h4 { color: var(--titulo); font-size: 1.05rem; margin-bottom: 4px; }
+.restaurante-tipo {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--oro);
+  margin-bottom: 8px;
+}
+.tarjeta-restaurante p { color: var(--texto-suave); font-size: 0.9rem; }
+
+/* Negocios reales de socios: la tarjeta es un <a>, así que se le quitan
+   los estilos de enlace y se le agrega feedback visual al pasar el mouse. */
+a.tarjeta-restaurante-negocio {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  cursor: pointer;
+}
+a.tarjeta-restaurante-negocio:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+.tarjeta-restaurante-foto {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+.tarjeta-restaurante-vermas {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--titulo);
+}
+
+/* ── Reservas por WhatsApp + Reseñas ────────────────────────────────────── */
+.detalle-extra { padding-bottom: 70px; display: flex; flex-direction: column; gap: 32px; }
+
+.bloque-reservas {
+  background: var(--superficie);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  padding: 28px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.bloque-reservas-texto h3 { font-size: 1.25rem; margin-bottom: 6px; }
+.bloque-reservas-texto p { color: var(--texto-suave); font-size: 0.92rem; }
+
+.boton-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #25D366;
+  color: var(--claro);
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 14px 26px;
+  border-radius: 999px;
+  white-space: nowrap;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.boton-whatsapp i { font-size: 1.2rem; }
+.boton-whatsapp:hover { transform: translateY(-2px); box-shadow: var(--sombra); }
+
+.bloque-resenas {
+  background: var(--superficie);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  padding: 32px;
+}
+.bloque-resenas h3 { font-size: 1.25rem; margin-bottom: 18px; }
+
+.lista-resenas { display: grid; gap: 14px; margin-bottom: 32px; }
+.resenas-vacio { color: var(--texto-suave); font-size: 0.92rem; }
+
+.tarjeta-resena {
+  background: var(--superficie-2);
+  border-radius: 12px;
+  padding: 16px 20px;
+}
+.tarjeta-resena-cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.tarjeta-resena-cabecera strong { color: var(--titulo); }
+.estrellas-mostradas { color: #E6B84A; letter-spacing: 1px; }
+.tarjeta-resena p { color: var(--texto); font-size: 0.92rem; }
+.resena-fecha { display: block; margin-top: 8px; font-size: 0.78rem; color: var(--texto-suave); }
+
+.formulario-resena {
+  border-top: 1px solid rgba(214,178,106,0.15);
+  padding-top: 26px;
+}
+.formulario-resena h4 { font-size: 1.05rem; margin-bottom: 16px; }
+
+.campo-estrellas { margin-bottom: 18px; }
+.campo-estrellas label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 8px; color: var(--titulo); }
+
+.selector-estrellas { display: inline-flex; gap: 6px; font-size: 1.8rem; cursor: pointer; }
+.selector-estrellas span { color: #4A433A; transition: color 0.12s ease, transform 0.12s ease; }
+.selector-estrellas span:hover { transform: scale(1.1); }
+.selector-estrellas span.activa { color: #E6B84A; }
+
+.contador-caracteres {
+  text-align: right;
+  font-size: 0.78rem;
+  color: var(--texto-suave);
+  margin-top: 4px;
+}
+
+@media (max-width: 780px) {
+  .detalle-cuerpo { grid-template-columns: 1fr; }
+  .bloque-reservas { flex-direction: column; align-items: flex-start; }
+  .boton-whatsapp { width: 100%; justify-content: center; }
+}
+
+/* ── Rediseño responsive de las secciones del destino ─────────────────── */
+.detalle-seccion {
+  padding: 34px 0;
+  scroll-margin-top: 90px;
+}
+.detalle-seccion-final { padding-bottom: 64px; }
+.encabezado-seccion { max-width: 760px; margin: 0 0 22px; }
+.encabezado-seccion h2 {
+  color: var(--titulo);
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: clamp(1.65rem, 3vw, 2.15rem);
+  line-height: 1.2;
+  margin: 5px 0 9px;
+}
+.encabezado-seccion p { color: var(--texto-suave); line-height: 1.65; margin: 0; }
+.etiqueta-seccion {
+  color: var(--oro);
+  display: inline-block;
+  font-size: .73rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.rejilla-contenido, .rejilla-negocios, .rejilla-itinerario {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+.rejilla-lista { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.tarjeta-atraccion-destino, .tarjeta-negocio-destino, .tarjeta-lugar-comer,
+.tarjeta-franja-itinerario, .tarjeta-lista-destino {
+  min-width: 0;
+  overflow: hidden;
+  background: var(--superficie);
+  border: 1px solid rgba(214,178,106,.18);
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.5);
+}
+.tarjeta-atraccion-destino img, .tarjeta-negocio-destino img {
+  display: block; width: 100%; height: 190px; object-fit: cover;
+}
+.imagen-sin-foto {
+  height: 150px; display: grid; place-items: center;
+  background: linear-gradient(135deg, #1D1A17, #2A2621);
+  color: var(--oro); font-size: 2rem;
+}
+.tarjeta-atraccion-contenido, .tarjeta-negocio-contenido, .tarjeta-lugar-comer { padding: 18px; }
+.tarjeta-atraccion-contenido h3, .tarjeta-negocio-contenido h3,
+.tarjeta-lugar-comer h4, .tarjeta-franja-itinerario h3 {
+  color: var(--titulo); font-size: 1.08rem; margin: 4px 0 8px;
+}
+.tarjeta-atraccion-contenido p, .tarjeta-negocio-contenido p,
+.tarjeta-lugar-comer p, .paso-itinerario-resumen p {
+  color: var(--texto-suave); font-size: .9rem; line-height: 1.55; margin: 0;
+}
+a.tarjeta-negocio-destino { color: inherit; display: block; text-decoration: none; transition: transform .18s ease, box-shadow .18s ease; }
+a.tarjeta-negocio-destino:hover { color: inherit; transform: translateY(-4px); box-shadow: 0 14px 30px rgba(0,0,0,.5); }
+.tarjeta-lista-destino { display: flex; align-items: center; gap: 13px; padding: 17px; color: var(--titulo); line-height: 1.45; }
+.tarjeta-lista-icono { flex: 0 0 38px; width: 38px; height: 38px; display: grid; place-items: center; border-radius: 12px; background: rgba(214,178,106,.12); color: var(--oro); }
+.tarjeta-franja-itinerario { padding: 20px; }
+.tarjeta-franja-itinerario h3 i { color: var(--oro); margin-right: 7px; }
+.pasos-itinerario-resumen { display: grid; gap: 14px; }
+.paso-itinerario-resumen { border-left: 2px solid rgba(214,178,106,.25); padding-left: 13px; display: grid; gap: 4px; }
+.hora-itinerario { color: var(--oro); font-size: .78rem; font-weight: 700; }
+.estado-vacio, .resenas-vacio { grid-column: 1/-1; padding: 22px; background: var(--superficie-2); color: var(--texto-suave); border-radius: 12px; line-height: 1.5; }
+.enlace-ver-planes { display: inline-flex; gap: 9px; align-items: center; margin-top: 18px; color: var(--titulo); font-weight: 700; text-decoration: none; }
+.enlace-ver-planes:hover { color: var(--oro); }
+.detalle-seccion-reserva { padding-top: 10px; }
+.bloque-reservas { border: 1px solid rgba(214,178,106,.18); }
+.bloque-reservas-icono { flex: 0 0 54px; width: 54px; height: 54px; display: grid; place-items: center; border-radius: 16px; background: rgba(214,178,106,.12); color: var(--oro); font-size: 1.65rem; }
+.bloque-reservas-texto { flex: 1; min-width: 220px; }
+.bloque-reservas-texto h2 { color: var(--titulo); font-family: 'Fraunces', Georgia, serif; font-size: 1.45rem; margin: 5px 0 7px; }
+.lista-resenas { display: grid; gap: 14px; }
+.tarjeta-resena { padding: 18px 20px; background: var(--superficie); border: 1px solid rgba(214,178,106,.18); border-radius: 14px; box-shadow: 0 5px 18px rgba(0,0,0,.5); }
+.tarjeta-resena-cabecera, .tarjeta-resena-pie { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.tarjeta-resena-cabecera strong { color: var(--titulo); }
+.estrellas-mostradas { color: #E6B84A; letter-spacing: 2px; white-space: nowrap; }
+.resena-comentario { color: var(--texto-suave); line-height: 1.6; margin: 12px 0; overflow-wrap: anywhere; }
+.resena-fecha { color: var(--texto-suave); font-size: .78rem; }
+.boton-eliminar-resena { border: 0; border-radius: 8px; padding: 8px 11px; color: #F2A596; background: rgba(190,70,55,.15); cursor: pointer; font-weight: 600; }
+.boton-eliminar-resena:hover { background: rgba(190,70,55,.28); }
+.controles-resenas { display: flex; justify-content: center; margin: 18px 0; }
+.boton-ver-resenas { min-width: 190px; }
+.mensaje-limite-resenas { display: none; padding: 12px 15px; margin: 12px 0; border-radius: 10px; background: rgba(214,178,106,.14); color: var(--oro-claro); line-height: 1.45; }
+.mensaje-limite-resenas.visible { display: block; }
+.mensaje-limite-resenas.informativo { background: rgba(214,178,106,.08); color: var(--texto); }
+.formulario-resena { margin-top: 25px; padding: 24px; background: var(--superficie-2); border-radius: 16px; }
+.formulario-resena h3 { color: var(--titulo); margin: 0 0 5px; }
+.formulario-resena-intro { color: var(--texto-suave); margin: 0 0 18px; }
+.campo-resena textarea { box-sizing: border-box; width: 100%; min-height: 115px; padding: 12px 14px; border: 1px solid rgba(214,178,106,.3); border-radius: 10px; resize: vertical; font: inherit; }
+.selector-bloqueado { opacity: .45; cursor: not-allowed; }
+.formulario-resena button:disabled { cursor: not-allowed; opacity: .6; }
+.subseccion-lugares-comer { margin-top: 38px; }
+.encabezado-subseccion { margin-bottom: 16px; }
+.encabezado-subseccion h3 { color: var(--titulo); font-family: 'Fraunces', Georgia, serif; font-size: 1.35rem; margin-bottom: 6px; }
+
+@media (max-width: 900px) {
+  .rejilla-contenido, .rejilla-negocios, .rejilla-itinerario { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 620px) {
+  .detalle-hero { height: 300px; }
+  .detalle-hero-texto { padding: 24px 0; }
+  .detalle-hero-texto h1 { font-size: 2rem; }
+  .detalle-cuerpo { padding: 28px 0; gap: 22px; }
+  .detalle-seccion { padding: 25px 0; }
+  .rejilla-contenido, .rejilla-negocios, .rejilla-itinerario, .rejilla-lista { grid-template-columns: 1fr; gap: 13px; }
+  .tarjeta-atraccion-destino img, .tarjeta-negocio-destino img { height: 175px; }
+  .bloque-reservas { padding: 22px; gap: 15px; }
+  .bloque-reservas-texto { min-width: 100%; }
+  .formulario-resena { padding: 18px; }
+  .tarjeta-resena-cabecera { align-items: flex-start; flex-direction: column; gap: 5px; }
+  .tarjeta-resena-pie { flex-wrap: wrap; }
+}

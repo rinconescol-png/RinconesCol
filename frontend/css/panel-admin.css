@@ -1,0 +1,103 @@
+/* panel-admin.css — solo estilos de panel-admin.html */
+
+.hero-panel-admin { padding: 48px 0; }
+.hero-panel-admin h1 { font-size: 2.1rem; }
+.hero-panel-admin p { max-width: 640px; }
+
+.panel-admin-contenido { padding: 40px 0 80px; }
+
+.estado-carga {
+  text-align: center;
+  color: var(--texto-suave);
+  padding: 60px 20px;
+  font-size: 1rem;
+}
+
+/* Filtros de estado */
+.filtros-estado { display: flex; gap: 10px; margin-bottom: 28px; flex-wrap: wrap; }
+.filtro-chip {
+  border: 1.5px solid rgba(214,178,106,0.25);
+  background: var(--superficie);
+  color: var(--texto);
+  font-family: var(--fuente-texto);
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 8px 18px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.filtro-chip:hover { border-color: var(--titulo); }
+.filtro-chip.activo { background: var(--oro); color: var(--tinta); border-color: var(--oro); }
+
+/* Tarjetas de solicitud */
+.lista-solicitudes { display: flex; flex-direction: column; gap: 22px; }
+
+.tarjeta-solicitud {
+  background: var(--superficie);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  padding: 28px 32px;
+}
+
+.tarjeta-solicitud-encabezado h2 { font-size: 1.3rem; margin: 6px 0 2px; }
+
+.chip-estado {
+  display: inline-block;
+  font-weight: 700;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 5px 12px;
+  border-radius: 999px;
+}
+.chip-pendiente { background: rgba(230,184,74,.18); color: #F0D69A; }
+.chip-aprobado  { background: rgba(120,190,120,.16); color: #9AD59A; }
+.chip-rechazado { background: rgba(190,70,55,.18); color: #F2A596; }
+
+.detalle-solicitud {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px 24px;
+  margin: 18px 0;
+}
+.detalle-solicitud dt { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--texto-suave); margin-bottom: 2px; }
+.detalle-solicitud dd { font-size: 0.95rem; }
+
+.mensaje-solicitud {
+  background: var(--superficie-2);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-size: 0.9rem;
+  color: var(--texto-suave);
+  margin-bottom: 18px;
+}
+
+.acciones-aprobar { border-top: 1px solid rgba(214,178,106,0.12); padding-top: 20px; }
+
+.fila-aprobar { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 16px; }
+.fila-aprobar label { display: flex; flex-direction: column; gap: 6px; font-size: 0.85rem; font-weight: 600; color: var(--texto-suave); flex: 1; min-width: 200px; }
+.fila-aprobar select {
+  padding: 10px 12px;
+  border: 1.5px solid rgba(214,178,106,0.25);
+  border-radius: 10px;
+  background: var(--superficie-2);
+  font-family: var(--fuente-texto);
+  font-size: 0.95rem;
+  color: var(--texto);
+}
+.fila-aprobar select:focus { outline: none; border-color: var(--titulo); background: var(--superficie); }
+
+.fila-botones { display: flex; gap: 12px; }
+
+.boton-rechazar {
+  background: var(--superficie);
+  color: #F2A596;
+  border: 1.5px solid #C0584A;
+}
+.boton-rechazar:hover { background: #B0453A; color: var(--claro); }
+
+@media (max-width: 640px) {
+  .tarjeta-solicitud { padding: 22px 20px; }
+  .fila-botones { flex-direction: column; }
+}

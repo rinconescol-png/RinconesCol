@@ -1,0 +1,103 @@
+/* perfil.css — solo estilos de perfil.html */
+
+.hero-perfil { padding: 48px 0; }
+.hero-perfil h1 { font-size: 2.1rem; }
+.hero-perfil p { max-width: 640px; }
+
+.perfil-contenido { padding: 40px 0 80px; }
+
+.estado-carga {
+  text-align: center;
+  color: var(--texto-suave);
+  padding: 60px 20px;
+  font-size: 1rem;
+}
+
+.tarjeta-panel {
+  background: var(--blanco);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  padding: 32px;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.chip-categoria {
+  display: inline-block;
+  background: var(--crema);
+  color: var(--cafe-tierra);
+  font-weight: 700;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 5px 12px;
+  border-radius: 999px;
+  margin-bottom: 10px;
+}
+
+/* ── Vista de solo lectura ── */
+.vista-perfil {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+}
+
+.datos-perfil h2 { font-size: 1.5rem; margin-top: 2px; }
+.perfil-correo { color: var(--texto-suave); font-size: 0.92rem; margin-bottom: 18px; }
+
+.vista-perfil .boton { margin-top: 10px; }
+
+/* ── Avatar (foto o iniciales) ── */
+.avatar-perfil {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--crema);
+  border: 3px solid var(--azul-profundo);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  flex-shrink: 0;
+}
+.avatar-perfil img { width: 100%; height: 100%; object-fit: cover; }
+.avatar-inicial {
+  font-family: var(--fuente-titulo);
+  font-size: 2.6rem;
+  font-weight: 700;
+  color: var(--azul-profundo);
+}
+
+.avatar-perfil-formulario { margin: 0 auto 20px; }
+
+/* ── Formulario de edición ── */
+.formulario-perfil { display: flex; flex-direction: column; align-items: center; }
+.formulario-perfil .campo { width: 100%; max-width: 420px; }
+
+.campo-foto input[type="file"] {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1.5px dashed rgba(111,78,55,0.35);
+  border-radius: 10px;
+  background: var(--crema);
+  font-family: var(--fuente-texto);
+  font-size: 0.88rem;
+  cursor: pointer;
+}
+
+.texto-ayuda { color: var(--texto-suave); font-size: 0.85rem; margin-top: 6px; }
+
+.acciones-formulario-perfil {
+  display: flex;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+@media (max-width: 560px) {
+  .tarjeta-panel { padding: 24px; }
+  .acciones-formulario-perfil { flex-direction: column; width: 100%; max-width: 420px; }
+  .acciones-formulario-perfil .boton { width: 100%; }
+}

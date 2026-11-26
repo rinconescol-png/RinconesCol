@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RinconesCol · Restablecer contraseña</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Fraunces:wght@500;600;700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/fx.css" />
+  <link rel="stylesheet" href="css/login.css" />
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="contenedor">
+      <a href="index.html" class="logo">
+        <img src="img/logo4.jpg" alt="Logo RinconesCol" />
+      </a>
+      <div class="nav-enlaces"></div>
+      <div class="navbar-acciones">
+        <a href="login.html" class="boton boton-secundario">Volver a iniciar sesión</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="pantalla-formulario">
+    <div class="caja-formulario">
+      <h1>Crear nueva contraseña</h1>
+      <p id="texto-instrucciones">Escribe tu nueva contraseña para tu cuenta de RinconesCol.</p>
+
+      <div class="mensaje-error" id="error-restablecer"></div>
+      <div class="mensaje-exito" id="exito-restablecer"></div>
+
+      <form id="form-restablecer">
+        <div class="campo">
+          <label for="nueva-clave">Nueva contraseña</label>
+          <input type="password" id="nueva-clave" placeholder="••••••••" minlength="6" required />
+        </div>
+        <div class="campo">
+          <label for="nueva-clave-confirmar">Confirmar nueva contraseña</label>
+          <input type="password" id="nueva-clave-confirmar" placeholder="••••••••" minlength="6" required />
+        </div>
+        <button type="submit" class="boton boton-primario boton-ancho" id="boton-restablecer">Guardar nueva contraseña</button>
+      </form>
+
+      <p class="enlace-alterno" id="enlace-a-login" style="display:none;">
+        <a href="login.html">Ir a iniciar sesión</a>
+      </p>
+      <p class="enlace-alterno" id="enlace-a-solicitar" style="display:none;">
+        <a href="olvide-contrasena.html">Solicitar un nuevo enlace</a>
+      </p>
+    </div>
+  </div>
+
+  <script src="js/auth.js"></script>
+  <script>
+
+    const parametros = new URLSearchParams(window.location.search);
+    const token = parametros.get("token");
+
+    const formulario = document.getElementById("form-restablecer");
+    const cajaError = document.getElementById("error-restablecer");
+    const cajaExito = document.getElementById("exito-restablecer");
+
+    // Sin token en el enlace, no hay nada que restablecer: se le indica al
+    // usuario que pida uno nuevo desde "olvide-contrasena.html", en vez de
+    // dejarlo frente a un formulario que nunca podrá enviar con éxito.
+    if (!token) {
+      document.getElementById("texto-instrucciones").style.display = "none";
+      formulario.style.display = "none";
+      cajaError.textContent = "Este enlace no es válido. Solicita uno nuevo para restablecer tu contraseña.";
+      cajaError.classList.add("visible");
+      document.getElementById("enlace-a-solicitar").style.display = "";
+    }
+
+    formulario.addEventListener("submit", function (evento) {
+      evento.preventDefault();
+      const clave = document.getElementById("nueva-clave").value;
+      const claveConfirmar = document.getElementById("nueva-clave-confirmar").value;
+      const boton = document.getElementById("boton-restablecer");
+
+      cajaError.classList.remove("visible");
+      cajaExito.classList.remove("visible");
+
+      if (clave !== claveConfirmar) {
+        cajaError.textContent = "Las contraseñas no coinciden.";
+        cajaError.classList.add("visible");
+        return;
+      }
+
+      boton.disabled = true;
+      boton.textContent = "Guardando...";
+
+      const resultado = restablecerContrasena(token, clave);
+
+      boton.disabled = false;
+      boton.textContent = "Guardar nueva contraseña";
+
+      if (!resultado.ok) {
+        cajaError.textContent = resultado.error || "No se pudo restablecer la contraseña.";
+        cajaError.classList.add("visible");
+        document.getElementById("enlace-a-solicitar").style.display = "";
+        return;
+      }
+
+      formulario.style.display = "none";
+      document.getElementById("texto-instrucciones").style.display = "none";
+      cajaExito.textContent = resultado.mensaje || "Tu contraseña fue restablecida correctamente. Ya puedes iniciar sesión.";
+      cajaExito.classList.add("visible");
+      document.getElementById("enlace-a-login").style.display = "";
+    });
+  </script>
+  <script src="js/nav.js" defer></script>
+  <script src="js/fx.js" defer></script>
+</body>
+</html>

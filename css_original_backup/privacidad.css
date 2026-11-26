@@ -1,0 +1,6 @@
+/*  privacidad.css — solo estilos de privacidad.html */
+
+.pagina-legal { padding: 60px 0 90px; max-width: 780px; margin: 0 auto; }
+.pagina-legal h2 { margin-top: 34px; margin-bottom: 12px; font-size: 1.25rem; }
+.pagina-legal p { color: var(--texto-suave); margin-bottom: 14px; }
+.pagina-legal .fecha { color: var(--texto-suave); font-size: 0.85rem; margin-bottom: 30px; }

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RinconesCol · Detalle del negocio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Fraunces:wght@500;600;700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/fx.css" />
+  <link rel="stylesheet" href="css/negocio-detalle.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="contenedor">
+      <a href="index.html" class="logo" id="logo-link">
+        <img src="img/logo4.jpg" alt="Logo RinconesCol" />
+      </a>
+      <div class="nav-enlaces" id="nav-enlaces">
+        <a href="index.html">Inicio</a>
+        <a href="destinos.html">Destinos</a>
+        <a href="contacto.html">Contacto</a>
+        <a href="negocio.html">Negocios</a>
+      </div>
+      <div class="navbar-acciones" id="navbar-acciones">
+        <a href="login.html" class="boton boton-secundario">Iniciar sesión</a>
+      </div>
+    </div>
+  </nav>
+
+  <div id="cargando-negocio" class="estado-carga">Cargando negocio…</div>
+  <div id="no-encontrado" class="estado-carga" style="display:none;">
+    No encontramos este negocio. <a href="destinos.html">Volver a destinos</a>.
+  </div>
+
+  <div id="contenido-negocio" style="display:none;">
+
+    <div class="negocio-hero" id="negocio-hero">
+      <div class="contenedor negocio-hero-texto">
+        <a id="volver-destino" class="negocio-volver" href="destinos.html"><i class="fa-solid fa-arrow-left"></i> Volver al destino</a>
+        <span class="chip-categoria" id="negocio-categoria">Categoría</span>
+        <h1 id="negocio-nombre"></h1>
+        <p id="negocio-pueblo" class="negocio-hero-pueblo"></p>
+      </div>
+    </div>
+
+    <section class="contenedor negocio-cuerpo">
+      <div class="negocio-info">
+        <h2>Sobre este negocio</h2>
+        <p id="negocio-descripcion"></p>
+
+        <div id="bloque-ubicacion-negocio" style="display:none;">
+          <h2>📍 Dónde está ubicado</h2>
+          <p id="negocio-ubicacion"></p>
+        </div>
+
+        <h2 id="titulo-fotos" style="display:none;">📷 Fotos</h2>
+        <div class="rejilla-fotos-negocio" id="rejilla-fotos-negocio"></div>
+
+        <h2 id="titulo-items" style="display:none;">🍽️ Lo que ofrece</h2>
+        <div class="rejilla-items-negocio" id="rejilla-items-negocio"></div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="contenedor footer-grid">
+      <div class="footer-marca">
+        <a href="index.html" class="logo">
+          <img src="img/logo4.jpg" alt="Logo RinconesCol" />
+          Rincones<span>COL</span>
+        </a>
+        <p class="footer-tagline">Turismo • Gastronomía • Pueblos</p>
+      </div>
+
+      <div class="footer-columna">
+        <h4>Información</h4>
+        <a href="privacidad.html">Política de Privacidad</a>
+        <a href="terminos.html">Términos y Condiciones</a>
+      </div>
+
+      <div class="footer-columna">
+        <h4>Descubre más de Colombia</h4>
+        <div class="footer-redes">
+          <a href="https://www.facebook.com/" target="_blank" rel="noopener" aria-label="Facebook">📘</a>
+          <a href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="Instagram">📷</a>
+          <a href="https://www.tiktok.com/" target="_blank" rel="noopener" aria-label="TikTok">🎵</a>
+        </div>
+        <p class="footer-idioma">🇨🇴 Español (Colombia)</p>
+      </div>
+    </div>
+
+    <div class="footer-inferior">
+      © 2026 RinconesCol | Todos los derechos reservados
+    </div>
+  </footer>
+
+  <script src="js/auth.js"></script>
+  <script>
+    // Igual que en negocio.html: si hay sesión, se usa la navbar interna
+    // para que "Mi negocio" / "Mi perfil" aparezcan de forma consistente.
+    const usuarioSesion = usuarioActual();
+    if (usuarioSesion) {
+      document.getElementById("logo-link").href = "home.html";
+      document.getElementById("nav-enlaces").innerHTML = `
+        <a href="home.html">Inicio</a>
+        <a href="destinos.html">Destinos</a>
+        <a href="contacto.html">Contacto</a>
+        <a href="negocio.html">Negocios</a>`;
+      document.getElementById("navbar-acciones").innerHTML = `
+        <div class="nav-usuario">
+          Hola, <strong id="nombre-usuario">${usuarioSesion.nombre}</strong>
+          <span class="enlace-salir" onclick="cerrarSesion()">Salir</span>
+        </div>`;
+      mostrarNombreUsuario();
+    }
+
+    const ETIQUETAS_CATEGORIA_NEGOCIO = {
+      restaurante: "Restaurante",
+      hotel: "Hotel / Posada",
+      cafeteria: "Cafetería",
+      experiencia: "Experiencia turística",
+      artesania: "Artesanías / Emprendimiento"
+    };
+
+    const parametros = new URLSearchParams(window.location.search);
+    const negocioId = parametros.get("id");
+
+    const resultado = negocioId ? obtenerNegocioPublico(negocioId) : { ok: false };
+
+    document.getElementById("cargando-negocio").style.display = "none";
+
+    if (!resultado.ok) {
+      document.getElementById("no-encontrado").style.display = "";
+    } else {
+      const negocio = resultado.data;
+      document.getElementById("contenido-negocio").style.display = "";
+
+      if (negocio.foto) {
+        document.getElementById("negocio-hero").style.backgroundImage = `url(${negocio.foto})`;
+        document.getElementById("negocio-hero").classList.add("negocio-hero-con-foto");
+      }
+      document.getElementById("negocio-categoria").textContent = ETIQUETAS_CATEGORIA_NEGOCIO[negocio.categoria] || "Negocio aliado";
+      document.getElementById("negocio-nombre").textContent = negocio.nombre;
+      document.getElementById("negocio-pueblo").textContent = negocio.pueblo_nombre ? "📍 " + negocio.pueblo_nombre : "";
+      document.getElementById("negocio-descripcion").textContent = negocio.descripcion || "Este negocio todavía no ha agregado una descripción.";
+
+      if (negocio.ubicacion) {
+        document.getElementById("negocio-ubicacion").textContent = negocio.ubicacion;
+        document.getElementById("bloque-ubicacion-negocio").style.display = "";
+      }
+
+      if (negocio.pueblo_slug) {
+        document.getElementById("volver-destino").href = "destino.html?id=" + encodeURIComponent(negocio.pueblo_slug);
+      }
+
+      const fotos = negocio.fotos || [];
+      if (fotos.length > 0) {
+        document.getElementById("titulo-fotos").style.display = "";
+        const rejillaFotos = document.getElementById("rejilla-fotos-negocio");
+        fotos.forEach(foto => {
+          rejillaFotos.innerHTML += `<img src="${foto.url}" alt="Foto de ${negocio.nombre}" loading="lazy" />`;
+        });
+      }
+
+      const items = negocio.items || [];
+      if (items.length > 0) {
+        document.getElementById("titulo-items").style.display = "";
+        const rejillaItems = document.getElementById("rejilla-items-negocio");
+        items.forEach(item => {
+          const precio = (item.precio !== null && item.precio !== undefined)
+            ? `<p class="item-negocio-precio">$${Number(item.precio).toLocaleString("es-CO")}</p>`
+            : "";
+          rejillaItems.innerHTML += `
+            <div class="tarjeta-item-negocio">
+              ${item.foto ? `<img src="${item.foto}" alt="${item.nombre}" />` : ""}
+              <div class="tarjeta-item-negocio-cuerpo">
+                <h4>${item.nombre}</h4>
+                ${item.descripcion ? `<p>${item.descripcion}</p>` : ""}
+                ${precio}
+              </div>
+            </div>`;
+        });
+      }
+    }
+  </script>
+  <script src="js/nav.js" defer></script>
+  <script src="js/fx.js" defer></script>
+</body>
+</html>

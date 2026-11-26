@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RinconesCol · Atracciones y planes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Fraunces:wght@500;600;700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/fx.css" />
+  <link rel="stylesheet" href="css/atracciones.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="contenedor">
+      <a href="home.html" class="logo">
+        <img src="img/logo4.jpg" alt="Logo RinconesCol" />
+      </a>
+      <div class="nav-enlaces">
+        <a href="home.html">Inicio</a>
+        <a href="destinos.html" class="activo">Destinos</a>
+        <a href="contacto.html">Contacto</a>
+        <a href="negocio.html">Negocios</a>
+      </div>
+      <div class="nav-usuario">
+        Hola, <strong id="nombre-usuario">viajero</strong>
+        <span class="enlace-salir" onclick="cerrarSesion()">Salir</span>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero-interno atracciones-hero">
+    <div class="contenedor">
+      <a id="volver-destino" href="destinos.html" class="atracciones-volver"><i class="fa-solid fa-arrow-left"></i> Volver al destino</a>
+      <div class="tarjeta-region" id="atracciones-region"></div>
+      <h1 id="atracciones-titulo">Atracciones y planes</h1>
+      <p id="atracciones-subtitulo">Todo lo que puedes hacer aquí, más un itinerario sugerido de un día.</p>
+    </div>
+  </header>
+
+  <section class="contenedor seccion-atracciones">
+    <h2>🎡 Atracciones y planes</h2>
+    <p class="seccion-atracciones-intro">Los planes imperdibles de este destino, uno por uno.</p>
+    <div class="rejilla-atracciones" id="lista-atracciones">
+      <p class="atracciones-vacio">Cargando atracciones…</p>
+    </div>
+  </section>
+
+  <section class="contenedor seccion-itinerario">
+    <h2>🗓️ Itinerario sugerido de 1 día</h2>
+    <p class="seccion-atracciones-intro">Una propuesta para aprovechar el día completo, de la mañana a la noche.</p>
+
+    <div class="itinerario-linea" id="itinerario-linea">
+      <div class="itinerario-franja" id="franja-manana">
+        <div class="itinerario-franja-cabecera">
+          <i class="fa-solid fa-sun"></i>
+          <h3>Mañana</h3>
+        </div>
+        <div class="itinerario-pasos" id="pasos-manana"></div>
+      </div>
+
+      <div class="itinerario-franja" id="franja-tarde">
+        <div class="itinerario-franja-cabecera">
+          <i class="fa-solid fa-cloud-sun"></i>
+          <h3>Tarde</h3>
+        </div>
+        <div class="itinerario-pasos" id="pasos-tarde"></div>
+      </div>
+
+      <div class="itinerario-franja" id="franja-noche">
+        <div class="itinerario-franja-cabecera">
+          <i class="fa-solid fa-moon"></i>
+          <h3>Noche</h3>
+        </div>
+        <div class="itinerario-pasos" id="pasos-noche"></div>
+      </div>
+    </div>
+
+    <p class="itinerario-vacio" id="itinerario-vacio" style="display:none;">Todavía no hay un itinerario cargado para este destino.</p>
+  </section>
+
+  <section class="contenedor seccion-cta-atracciones">
+    <div class="cta-atracciones">
+      <div>
+        <h3>¿Te animaste con este plan?</h3>
+        <p>Escríbenos por WhatsApp y te ayudamos a organizarlo para tu fecha de viaje.</p>
+      </div>
+      <a id="whatsapp-atracciones" href="#" target="_blank" rel="noopener" class="boton-whatsapp">
+        <i class="fa-brands fa-whatsapp"></i> Hacer reserva por WhatsApp
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inferior">RinconesCol · Turismo por los pueblos de Colombia · Proyecto académico</div>
+  </footer>
+
+  <script src="js/auth.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/atracciones.js"></script>
+  <script src="js/nav.js" defer></script>
+  <script src="js/fx.js" defer></script>
+</body>
+</html>

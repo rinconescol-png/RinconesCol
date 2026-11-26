@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RinconesCol · Detalle del destino</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Fraunces:wght@500;600;700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/fx.css" />
+  <link rel="stylesheet" href="css/destino.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="contenedor">
+      <a href="home.html" class="logo">
+        <img src="img/logo4.jpg" alt="Logo RinconesCol" />
+      </a>
+      <div class="nav-enlaces">
+        <a href="home.html">Inicio</a>
+        <a href="destinos.html" class="activo">Destinos</a>
+        <a href="contacto.html">Contacto</a>
+        <a href="negocio.html">Negocios</a>
+      </div>
+      <div class="nav-usuario">
+        Hola, <strong id="nombre-usuario">viajero</strong>
+        <span class="enlace-salir" onclick="cerrarSesion()">Salir</span>
+      </div>
+    </div>
+  </nav>
+
+  <div class="detalle-hero" id="detalle-hero">
+    <div class="contenedor detalle-hero-texto">
+      <div class="tarjeta-region detalle-hero-region" id="detalle-region"></div>
+      <h1 id="detalle-nombre"></h1>
+    </div>
+  </div>
+
+  <!-- 1. Información general -->
+  <section class="contenedor detalle-general" id="informacion-general">
+    <div class="detalle-info tarjeta-contenido">
+      <div class="encabezado-seccion">
+        <span class="etiqueta-seccion">Conoce el destino</span>
+        <h2>Información general</h2>
+        <p>Descubre qué hace especial a este rincón de Colombia.</p>
+      </div>
+      <h3>Sobre este lugar</h3>
+      <p id="detalle-descripcion" class="texto-descripcion"></p>
+      <h3><i class="fa-solid fa-location-dot"></i> Dónde está ubicado</h3>
+      <p id="detalle-ubicacion" class="texto-descripcion"></p>
+    </div>
+
+    <aside class="detalle-lateral tarjeta-contenido">
+      <h3>Datos rápidos</h3>
+      <div class="dato"><span>Región</span><span id="lateral-region"></span></div>
+      <div class="dato"><span>Clima</span><span id="lateral-clima"></span></div>
+      <div class="dato"><span>Sello</span><span id="lateral-sello"></span></div>
+      <h3 class="titulo-alcaldia"><i class="fa-solid fa-landmark"></i> Alcaldía</h3>
+      <p id="lateral-alcalde" class="dato-alcalde"></p>
+    </aside>
+  </section>
+
+  <!-- 2. Emprendimientos -->
+  <section class="contenedor detalle-seccion" id="emprendimientos">
+    <div class="encabezado-seccion">
+      <span class="etiqueta-seccion">Apoya el talento local</span>
+      <h2>Emprendimientos</h2>
+      <p>Descubre negocios y proyectos locales que puedes visitar y apoyar durante tu recorrido.</p>
+    </div>
+    <div id="lista-emprendimientos" class="rejilla-negocios">
+      <p class="estado-vacio">Cargando emprendimientos...</p>
+    </div>
+    <div class="subseccion-lugares-comer">
+      <div class="encabezado-seccion encabezado-subseccion">
+        <h3>Otros lugares para comer</h3>
+        <p>Opciones gastronómicas registradas para este destino.</p>
+      </div>
+      <div id="detalle-restaurantes" class="rejilla-negocios"></div>
+    </div>
+  </section>
+
+  <!-- 3. Planes turísticos -->
+  <section class="contenedor detalle-seccion" id="planes-turisticos">
+    <div class="encabezado-seccion">
+      <span class="etiqueta-seccion">Organiza tu visita</span>
+      <h2>Planes turísticos</h2>
+      <p>Ideas para distribuir tu recorrido durante el día.</p>
+    </div>
+    <div id="itinerario-destino" class="rejilla-itinerario">
+      <p class="estado-vacio">Cargando planes turísticos...</p>
+    </div>
+    <a href="atracciones.html" id="enlace-ver-planes" class="enlace-ver-planes">
+      Explorar atracciones y el itinerario completo <i class="fa-solid fa-arrow-right"></i>
+    </a>
+  </section>
+
+  <!-- 4. Reservas -->
+  <section class="contenedor detalle-seccion detalle-seccion-reserva" id="reservar-destino">
+    <div class="bloque-reservas">
+      <div class="bloque-reservas-icono"><i class="fa-brands fa-whatsapp"></i></div>
+      <div class="bloque-reservas-texto">
+        <span class="etiqueta-seccion">Planea tu próxima aventura</span>
+        <h2>¿Listo para vivir esta experiencia?</h2>
+        <p>Comunícate con RinconesCol para recibir orientación sobre tu visita a este destino.</p>
+      </div>
+      <a id="whatsapp-reserva" href="#" target="_blank" rel="noopener" class="boton-whatsapp">
+        <i class="fa-brands fa-whatsapp"></i> Reservar
+      </a>
+    </div>
+  </section>
+
+  <!-- 5. Reseñas -->
+  <section class="contenedor detalle-seccion" id="resenas-destino">
+    <div class="bloque-resenas">
+      <div class="encabezado-seccion">
+        <span class="etiqueta-seccion">Experiencias de viajeros</span>
+        <h2>Reseñas</h2>
+        <p>Lee las opiniones de otras personas y comparte cómo fue tu visita.</p>
+      </div>
+      <div id="lista-resenas" class="lista-resenas">
+        <p class="resenas-vacio">Cargando reseñas...</p>
+      </div>
+      <div id="controles-resenas" class="controles-resenas"></div>
+      <p id="resena-limite-mensaje" class="mensaje-limite-resenas" role="status" aria-live="polite"></p>
+
+      <div class="formulario-resena">
+        <h3>Deja tu reseña</h3>
+        <p class="formulario-resena-intro">Tu opinión ayuda a otros viajeros a conocer mejor este destino.</p>
+        <div class="campo-estrellas">
+          <label>Tu calificación</label>
+          <div class="selector-estrellas" id="selector-estrellas" data-calificacion="0" aria-label="Selecciona de una a cinco estrellas">
+            <span data-valor="1" role="button" tabindex="0" aria-label="1 estrella">★</span>
+            <span data-valor="2" role="button" tabindex="0" aria-label="2 estrellas">★</span>
+            <span data-valor="3" role="button" tabindex="0" aria-label="3 estrellas">★</span>
+            <span data-valor="4" role="button" tabindex="0" aria-label="4 estrellas">★</span>
+            <span data-valor="5" role="button" tabindex="0" aria-label="5 estrellas">★</span>
+          </div>
+        </div>
+        <div class="campo campo-resena">
+          <label for="comentario-resena">Tu comentario</label>
+          <textarea id="comentario-resena" maxlength="500" placeholder="Cuéntanos cómo fue tu experiencia en este destino..."></textarea>
+          <div class="contador-caracteres"><span id="contador-actual">0</span>/500</div>
+        </div>
+        <div id="resena-mensaje-error" class="mensaje-error" role="alert"></div>
+        <div id="resena-mensaje-exito" class="mensaje-exito" role="status"></div>
+        <button id="btn-enviar-resena" type="button" class="boton boton-primario">Publicar reseña</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Actividades recreativas -->
+  <section class="contenedor detalle-seccion" id="actividades-recreativas">
+    <div class="encabezado-seccion">
+      <span class="etiqueta-seccion">Vive el lugar</span>
+      <h2>Actividades recreativas</h2>
+      <p>Opciones para disfrutar la naturaleza, la cultura y el ambiente del pueblo.</p>
+    </div>
+    <div id="detalle-actividades" class="rejilla-lista"></div>
+  </section>
+
+  <!-- 7. Platos típicos -->
+  <section class="contenedor detalle-seccion" id="platos-tipicos">
+    <div class="encabezado-seccion">
+      <span class="etiqueta-seccion">Sabores de la región</span>
+      <h2>Platos típicos</h2>
+      <p>Conoce algunas preparaciones tradicionales que hacen parte de su gastronomía.</p>
+    </div>
+    <div id="detalle-platos" class="rejilla-lista rejilla-platos"></div>
+  </section>
+
+  <!-- 8. Atracciones turísticas -->
+  <section class="contenedor detalle-seccion detalle-seccion-final" id="atracciones-turisticas">
+    <div class="encabezado-seccion">
+      <span class="etiqueta-seccion">Lugares para descubrir</span>
+      <h2>Atracciones turísticas</h2>
+      <p>Conoce los sitios de interés y experiencias disponibles en este pueblo.</p>
+    </div>
+    <div id="lista-atracciones-destino" class="rejilla-contenido">
+      <p class="estado-vacio">Cargando atracciones...</p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inferior">RinconesCol · Turismo por los pueblos de Colombia · Proyecto académico</div>
+  </footer>
+
+  <script src="js/auth.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/resenas.js"></script>
+  <script>
+    protegerPagina();
+    mostrarNombreUsuario();
+
+    const parametros = new URLSearchParams(window.location.search);
+    const idDestino = parametros.get("id");
+    const destino = DESTINOS.find(d => String(d.id) === String(idDestino));
+
+    function escaparHTML(valor) {
+      const elemento = document.createElement("span");
+      elemento.textContent = valor == null ? "" : String(valor);
+      return elemento.innerHTML;
+    }
+
+    function mostrarListaVacia(contenedorId, texto) {
+      const contenedor = document.getElementById(contenedorId);
+      if (contenedor) contenedor.innerHTML = '<p class="estado-vacio">' + escaparHTML(texto) + '</p>';
+    }
+
+    function renderizarListaSimple(contenedorId, elementos, icono) {
+      const contenedor = document.getElementById(contenedorId);
+      if (!contenedor) return;
+      if (!Array.isArray(elementos) || elementos.length === 0) {
+        mostrarListaVacia(contenedorId, "Todavía no hay información registrada para esta sección.");
+        return;
+      }
+      contenedor.innerHTML = elementos.map(function (elemento) {
+        return '<article class="tarjeta-lista-destino"><span class="tarjeta-lista-icono"><i class="fa-solid ' + icono + '"></i></span><span>' + escaparHTML(elemento) + '</span></article>';
+      }).join("");
+    }
+
+    function cargarAtraccionesDestino(puebloId) {
+      const contenedor = document.getElementById("lista-atracciones-destino");
+      if (!contenedor) return;
+      if (!puebloId || !Number.isInteger(Number(puebloId))) {
+        mostrarListaVacia("lista-atracciones-destino", "Las atracciones estarán disponibles cuando el backend esté conectado.");
+        return;
+      }
+      const respuesta = peticionSincrona("GET", "/atracciones/pueblo/" + encodeURIComponent(puebloId));
+      const atracciones = respuesta.body && respuesta.body.success ? respuesta.body.data : [];
+      if (!Array.isArray(atracciones) || atracciones.length === 0) {
+        mostrarListaVacia("lista-atracciones-destino", "Todavía no hay atracciones turísticas registradas para este pueblo.");
+        return;
+      }
+      contenedor.innerHTML = atracciones.map(function (atraccion) {
+        const nombre = escaparHTML(atraccion.nombre || "Atracción turística");
+        const tipo = escaparHTML(atraccion.tipo || "Experiencia");
+        const descripcion = escaparHTML(atraccion.descripcion || "");
+        const foto = atraccion.foto ? '<img src="' + escaparHTML(atraccion.foto) + '" alt="' + nombre + '" loading="lazy">' : '<div class="imagen-sin-foto"><i class="fa-solid fa-mountain-sun"></i></div>';
+        return '<article class="tarjeta-atraccion-destino">' + foto + '<div class="tarjeta-atraccion-contenido"><span class="restaurante-tipo">' + tipo + '</span><h3>' + nombre + '</h3><p>' + descripcion + '</p></div></article>';
+      }).join("");
+    }
+
+    function cargarPlanesDestino(puebloId) {
+      const contenedor = document.getElementById("itinerario-destino");
+      const enlace = document.getElementById("enlace-ver-planes");
+      if (!contenedor) return;
+      if (enlace) enlace.href = "atracciones.html?id=" + encodeURIComponent(destino.id);
+      if (!puebloId || !Number.isInteger(Number(puebloId))) {
+        mostrarListaVacia("itinerario-destino", "Los planes turísticos estarán disponibles cuando el backend esté conectado.");
+        return;
+      }
+      const respuesta = peticionSincrona("GET", "/itinerario/pueblo/" + encodeURIComponent(puebloId));
+      const datos = respuesta.body && respuesta.body.success ? (respuesta.body.data || {}) : {};
+      const franjas = [
+        { clave: "manana", titulo: "Mañana", icono: "fa-sun" },
+        { clave: "tarde", titulo: "Tarde", icono: "fa-cloud-sun" },
+        { clave: "noche", titulo: "Noche", icono: "fa-moon" }
+      ];
+      const total = franjas.reduce(function (suma, franja) { return suma + ((datos[franja.clave] || []).length); }, 0);
+      if (!total) {
+        mostrarListaVacia("itinerario-destino", "Todavía no hay planes turísticos registrados para este pueblo.");
+        return;
+      }
+      contenedor.innerHTML = franjas.map(function (franja) {
+        const pasos = datos[franja.clave] || [];
+        if (!pasos.length) return "";
+        return '<article class="tarjeta-franja-itinerario"><h3><i class="fa-solid ' + franja.icono + '"></i> ' + franja.titulo + '</h3><div class="pasos-itinerario-resumen">' + pasos.map(function (paso) {
+          const hora = paso.hora_sugerida ? '<span class="hora-itinerario">' + escaparHTML(paso.hora_sugerida) + '</span>' : "";
+          const descripcion = paso.descripcion ? '<p>' + escaparHTML(paso.descripcion) + '</p>' : "";
+          return '<div class="paso-itinerario-resumen">' + hora + '<strong>' + escaparHTML(paso.actividad || "Actividad") + '</strong>' + descripcion + '</div>';
+        }).join("") + '</div></article>';
+      }).join("");
+    }
+
+    function renderizarEmprendimientos(puebloId) {
+      const contenedor = document.getElementById("lista-emprendimientos");
+      if (!contenedor) return;
+      if (!puebloId || !Number.isInteger(Number(puebloId))) {
+        mostrarListaVacia("lista-emprendimientos", "Los emprendimientos estarán disponibles cuando el backend esté conectado.");
+        return;
+      }
+      const resultado = obtenerNegociosPorPueblo(puebloId);
+      if (!resultado.ok || !resultado.data || resultado.data.length === 0) {
+        mostrarListaVacia("lista-emprendimientos", "Todavía no hay emprendimientos aliados registrados para este pueblo.");
+        return;
+      }
+      const etiquetas = {
+        restaurante: "Restaurante",
+        hotel: "Hotel / Posada",
+        cafeteria: "Cafetería",
+        experiencia: "Experiencia turística",
+        artesania: "Artesanías / Emprendimiento"
+      };
+      contenedor.innerHTML = resultado.data.map(function (negocio) {
+        const id = Number(negocio.id);
+        const nombre = escaparHTML(negocio.nombre || "Negocio local");
+        const categoria = escaparHTML(etiquetas[negocio.categoria] || "Negocio aliado");
+        const descripcion = escaparHTML(negocio.descripcion || "");
+        const foto = negocio.foto ? '<img src="' + escaparHTML(negocio.foto) + '" alt="Foto de ' + nombre + '" loading="lazy">' : '<div class="imagen-sin-foto"><i class="fa-solid fa-store"></i></div>';
+        return '<a class="tarjeta-negocio-destino" href="negocio-detalle.html?id=' + encodeURIComponent(id) + '">' + foto + '<div class="tarjeta-negocio-contenido"><span class="restaurante-tipo">' + categoria + '</span><h3>' + nombre + '</h3><p>' + descripcion + '</p><span class="tarjeta-restaurante-vermas">Ver emprendimiento <i class="fa-solid fa-arrow-right"></i></span></div></a>';
+      }).join("");
+    }
+
+    if (!destino) {
+      window.location.href = "destinos.html";
+    } else {
+      document.getElementById("detalle-hero").style.backgroundImage = 'linear-gradient(180deg, rgba(15, 35, 45, .12), rgba(15, 35, 45, .72)), url("' + String(destino.imagen || "").replace(/["\\]/g, "") + '")';
+      document.getElementById("detalle-region").textContent = destino.region || "Colombia";
+      document.getElementById("detalle-nombre").textContent = destino.nombre || "Destino";
+      document.getElementById("detalle-descripcion").textContent = destino.descripcion || "";
+      document.getElementById("detalle-ubicacion").textContent = destino.ubicacion || "";
+      document.getElementById("lateral-region").textContent = destino.region || "No registrada";
+      document.getElementById("lateral-clima").textContent = destino.clima || "No registrado";
+      document.getElementById("lateral-sello").textContent = destino.sello || "No registrado";
+      document.getElementById("lateral-alcalde").textContent = destino.alcalde || "Información no disponible.";
+
+      const puebloId = destino.pueblo_id || (Number.isInteger(Number(destino.id)) ? Number(destino.id) : null);
+      renderizarListaSimple("detalle-actividades", destino.actividades || [], "fa-person-hiking");
+      renderizarListaSimple("detalle-platos", destino.platosTipicos || [], "fa-utensils");
+      cargarAtraccionesDestino(puebloId);
+      cargarPlanesDestino(puebloId);
+      renderizarEmprendimientos(puebloId);
+
+      const restaurantes = document.getElementById("detalle-restaurantes");
+      if (restaurantes) {
+        const lugares = Array.isArray(destino.dondeComer) ? destino.dondeComer : [];
+        restaurantes.innerHTML = lugares.length ? lugares.map(function (lugar) {
+          return '<article class="tarjeta-lugar-comer"><h4>' + escaparHTML(lugar.nombre) + '</h4><span class="restaurante-tipo">' + escaparHTML(lugar.tipo || "Gastronomía") + '</span><p>' + escaparHTML(lugar.descripcion || "") + '</p></article>';
+        }).join("") : '<p class="estado-vacio">No hay otros lugares para comer registrados.</p>';
+      }
+
+      inicializarBloqueDestino(Object.assign({}, destino, { pueblo_id: puebloId }));
+    }
+  </script>
+  <script src="js/nav.js" defer></script>
+  <script src="js/fx.js" defer></script>
+</body>
+</html>

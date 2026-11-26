@@ -1,0 +1,33 @@
+/* convenio.css — solo estilos de login-convenio.html */
+
+.pantalla-formulario {
+  min-height: calc(100vh - var(--nav-alto));
+  min-height: calc(100dvh - var(--nav-alto));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 24px;
+  background:
+    linear-gradient(160deg, rgba(111,78,55,0.92), rgba(27,75,102,0.9)),
+    url("../img/convenio.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+.caja-formulario-ancha {
+  background: var(--blanco);
+  border-radius: var(--radio-lg);
+  box-shadow: var(--sombra-lg);
+  padding: 46px 44px;
+  width: 100%;
+  max-width: 560px;
+}
+
+.caja-formulario-ancha h1 { font-size: 1.9rem; margin-bottom: 10px; }
+.caja-formulario-ancha > p { color: var(--texto-suave); margin-bottom: 28px; font-size: 0.95rem; }
+
+.fila-doble { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+
+@media (max-width: 560px) {
+  .fila-doble { grid-template-columns: 1fr; }
+}

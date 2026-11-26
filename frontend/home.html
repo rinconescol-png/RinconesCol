@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RinconesCol · Inicio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Fraunces:wght@500;600;700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/fx.css" />
+  <link rel="stylesheet" href="css/home.css" />
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="contenedor">
+      <a href="home.html" class="logo">
+        <img src="img/logo4.jpg" alt="Logo RinconesCol" />
+      </a>
+      <div class="nav-enlaces">
+        <a href="home.html" class="activo">Inicio</a>
+        <a href="destinos.html">Destinos</a>
+        <a href="contacto.html">Contacto</a>
+        <a href="negocio.html">Negocios</a>
+      </div>
+      <div class="nav-usuario">
+        Hola, <strong id="nombre-usuario">viajero</strong>
+        <span class="enlace-salir" onclick="cerrarSesion()">Salir</span>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero-interno">
+    <div class="contenedor">
+      <h1>Tu próxima escapada empieza en un pueblo pequeño.</h1>
+      <p>Explora destinos con historia, prueba la gastronomía de cada región y arma tu propia ruta por los rincones de Colombia.</p>
+      <div class="home-hero-botones">
+        <a href="destinos.html" class="boton boton-claro">Ver destinos</a>
+        <a href="gastronomia.html" class="boton boton-secundario">Ver gastronomía</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="contenedor">
+    <div class="seccion-cabecera">
+      <h2>Destinos destacados</h2>
+      <a href="destinos.html">Ver todos →</a>
+    </div>
+    <div class="rejilla" id="rejilla-destinos-destacados"></div>
+  </section>
+
+  <section class="contenedor">
+    <div class="seccion-cabecera">
+      <h2>Sabores que debes probar</h2>
+      <a href="gastronomia.html">Ver todos →</a>
+    </div>
+    <div class="rejilla" id="rejilla-gastronomia-destacada"></div>
+  </section>
+
+  <footer>
+    <div class="footer-inferior">RinconesCol · Turismo por los pueblos de Colombia · Proyecto académico</div>
+  </footer>
+
+  <script src="js/auth.js"></script>
+  <script src="js/data.js"></script>
+  <script>
+    protegerPagina();
+    mostrarNombreUsuario();
+
+    const rejillaDestinos = document.getElementById("rejilla-destinos-destacados");
+    DESTINOS.slice(0, 3).forEach(destino => {
+      rejillaDestinos.innerHTML += `
+        <a href="destino.html?id=${destino.id}" class="tarjeta">
+          <div class="tarjeta-imagen">
+            <img src="${destino.imagen}" alt="${destino.nombre}" />
+            <div class="sello-viajero">${destino.sello}</div>
+          </div>
+          <div class="tarjeta-cuerpo">
+            <div class="tarjeta-region">${destino.region}</div>
+            <h3>${destino.nombre}</h3>
+            <p>${destino.resumen}</p>
+            <span class="boton boton-secundario boton-ancho">Conoce más →</span>
+          </div>
+        </a>`;
+    });
+
+    const rejillaGastronomia = document.getElementById("rejilla-gastronomia-destacada");
+    GASTRONOMIA.slice(0, 3).forEach(plato => {
+      rejillaGastronomia.innerHTML += `
+        <div class="tarjeta">
+          <div class="tarjeta-imagen">
+            <img src="${plato.imagen}" alt="${plato.nombre}" />
+          </div>
+          <div class="tarjeta-cuerpo">
+            <div class="tarjeta-region">${plato.region}</div>
+            <h3>${plato.nombre}</h3>
+            <p>${plato.descripcion}</p>
+          </div>
+        </div>`;
+    });
+  </script>
+  <script src="js/nav.js" defer></script>
+  <script src="js/fx.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+/* registro.css — solo estilos de registro.html */
+
+.pantalla-formulario {
+  min-height: calc(100vh - var(--nav-alto));
+  min-height: calc(100dvh - var(--nav-alto));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 24px;
+  background:
+    linear-gradient(160deg, rgba(79,121,66,0.90), rgba(27,75,102,0.93)),
+    url("../img/pueblo.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+.caja-formulario {
+  background: var(--blanco);
+  border-radius: var(--radio-lg);
+  box-shadow: var(--sombra-lg);
+  padding: 46px 40px;
+  width: 100%;
+  max-width: 440px;
+}
+
+.caja-formulario h1 { font-size: 1.9rem; margin-bottom: 10px; }
+.caja-formulario > p { color: var(--texto-suave); margin-bottom: 28px; font-size: 0.95rem; }
+
+.enlace-alterno { text-align: center; margin-top: 20px; font-size: 0.92rem; color: var(--texto-suave); }
+.enlace-alterno a { color: var(--azul-profundo); font-weight: 600; }
+
+/* Checklist de requisitos de la contraseña */
+.lista-requisitos {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0 0 0;
+  font-size: 0.82rem;
+}
+
+.lista-requisitos li {
+  color: var(--texto-suave);
+  padding: 2px 0;
+  transition: color 0.2s ease;
+}
+
+.lista-requisitos li::before {
+  content: "○ ";
+}
+
+.lista-requisitos li.valido {
+  color: #2e7d32;
+}
+
+.lista-requisitos li.valido::before {
+  content: "✓ ";
+}
