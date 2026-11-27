@@ -1,4 +1,3 @@
-
 // ── Conexión con el backend real (FastAPI + PostgreSQL) ─────────────────────
 // Antes estos datos estaban escritos a mano aquí mismo; ahora se piden al
 // backend en http://127.0.0.1:8000. Si por alguna razón el backend no
@@ -142,12 +141,12 @@ const DESTINOS_RESPALDO = [
 ];
 
 const GASTRONOMIA_RESPALDO = [
-  { id: "trucha-guavio", nombre: "Trucha del Guavio", region: "Gachalá, Cundinamarca", descripcion: "Trucha fresca del Embalse del Guavio, preparada al ajillo o a la plancha y acompañada de arroz, patacón, ensalada y papa. Es uno de los platos más representativos de la gastronomía local.", imagen: "https://picsum.photos/seed/truchaguavio/700/500" },
-  { id: "ajiaco", nombre: "Ajiaco Santafereño", region: "Cundinamarca / Boyacá", descripcion: "Sopa espesa de tres papas, pollo desmechado y guasca, servida con crema de leche, alcaparras y aguacate. El plato que abriga el clima frío de la sabana.", imagen: "https://picsum.photos/seed/ajiaco/700/500" },
-  { id: "arepa-choclo", nombre: "Arepa de Choclo", region: "Eje Cafetero", descripcion: "Arepa dulce hecha con maíz tierno, acompañada de queso campesino. El desayuno favorito en los pueblos del Quindío y Risaralda.", imagen: "https://picsum.photos/seed/arepachoclo/700/500" },
-  { id: "sancocho", nombre: "Sancocho de Gallina", region: "Todo el país", descripcion: "Un caldo contundente de gallina criolla, yuca, plátano y mazorca, cocinado a fuego lento. Cada región tiene su propia versión, pero siempre reúne a la familia.", imagen: "https://picsum.photos/seed/sancocho/700/500" },
-  { id: "mote-queso", nombre: "Mote de Queso", region: "Costa Caribe", descripcion: "Sopa cremosa de ñame con queso costeño derretido, típica de los pueblos de Sucre y Bolívar como Mompox.", imagen: "https://picsum.photos/seed/motequeso/700/500" },
-  { id: "buñuelos", nombre: "Buñuelos y Natilla", region: "Todo el país", descripcion: "La dupla infaltable de la época decembrina: bolitas de queso fritas y un postre de maíz dulce con canela.", imagen: "https://picsum.photos/seed/bunuelos/700/500" }
+  { id: "trucha-guavio", nombre: "Trucha del Guavio", region: "Gachalá, Cundinamarca", descripcion: "Trucha fresca del Embalse del Guavio, preparada al ajillo o a la plancha y acompañada de arroz, patacón, ensalada y papa. Es uno de los platos más representativos de la gastronomía local.", imagen: "img/gastronomia/trucha-guavio.jpg" },
+  { id: "ajiaco", nombre: "Ajiaco Santafereño", region: "Cundinamarca / Boyacá", descripcion: "Sopa espesa de tres papas, pollo desmechado y guasca, servida con crema de leche, alcaparras y aguacate. El plato que abriga el clima frío de la sabana.", imagen: "img/gastronomia/ajiaco.jpg" },
+  { id: "arepa-choclo", nombre: "Arepa de Choclo", region: "Eje Cafetero", descripcion: "Arepa dulce hecha con maíz tierno, acompañada de queso campesino. El desayuno favorito en los pueblos del Quindío y Risaralda.", imagen: "img/gastronomia/arepa-choclo.jpg" },
+  { id: "sancocho", nombre: "Sancocho de Gallina", region: "Todo el país", descripcion: "Un caldo contundente de gallina criolla, yuca, plátano y mazorca, cocinado a fuego lento. Cada región tiene su propia versión, pero siempre reúne a la familia.", imagen: "img/gastronomia/sancocho.jpg" },
+  { id: "mote-queso", nombre: "Mote de Queso", region: "Costa Caribe", descripcion: "Sopa cremosa de ñame con queso costeño derretido, típica de los pueblos de Sucre y Bolívar como Mompox.", imagen: "img/gastronomia/mote-queso.jpg" },
+  { id: "buñuelos", nombre: "Buñuelos y Natilla", region: "Todo el país", descripcion: "La dupla infaltable de la época decembrina: bolitas de queso fritas y un postre de maíz dulce con canela.", imagen: "img/gastronomia/bunuelos-natilla.jpg" }
 ];
 
 // ── Se piden los datos reales al backend; si falla, se usa el respaldo ────
