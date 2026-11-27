@@ -97,6 +97,50 @@
 }
 .boton-rechazar:hover { background: #B0453A; color: var(--claro); }
 
+/* Pestañas del panel (Solicitudes / Usuarios) */
+.pestanas-panel { margin-bottom: 32px; }
+
+/* Usuarios registrados */
+.barra-usuarios { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 18px; }
+.barra-usuarios input {
+  flex: 1;
+  min-width: 220px;
+  padding: 10px 14px;
+  border: 1.5px solid rgba(214,178,106,0.25);
+  border-radius: 10px;
+  background: var(--superficie-2);
+  font-family: var(--fuente-texto);
+  font-size: 0.95rem;
+  color: var(--texto);
+}
+.barra-usuarios input:focus { outline: none; border-color: var(--titulo); background: var(--superficie); }
+
+.resumen-usuarios { color: var(--texto-suave); font-size: 0.9rem; margin-bottom: 18px; }
+
+.tabla-contenedor {
+  overflow-x: auto;
+  background: var(--superficie);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+}
+.tabla-usuarios { width: 100%; border-collapse: collapse; min-width: 640px; }
+.tabla-usuarios th,
+.tabla-usuarios td { text-align: left; padding: 14px 18px; font-size: 0.92rem; }
+.tabla-usuarios th {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--texto-suave);
+  border-bottom: 1px solid rgba(214,178,106,0.18);
+}
+.tabla-usuarios td { border-bottom: 1px solid rgba(214,178,106,0.08); }
+.tabla-usuarios tbody tr:last-child td { border-bottom: none; }
+.tabla-usuarios tbody tr:hover { background: var(--superficie-2); }
+
+.chip-rol-admin     { background: rgba(214,178,106,.2); color: var(--oro-claro); }
+.chip-rol-socio     { background: rgba(120,190,120,.16); color: #9AD59A; }
+.chip-rol-visitante { background: rgba(140,160,200,.16); color: #B7C6E6; }
+
 @media (max-width: 640px) {
   .tarjeta-solicitud { padding: 22px 20px; }
   .fila-botones { flex-direction: column; }

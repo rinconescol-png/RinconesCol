@@ -30,8 +30,8 @@
 
   <header class="hero-interno hero-panel-admin">
     <div class="contenedor">
-      <h1>Solicitudes de convenio</h1>
-      <p>Revisa las solicitudes que enviaron los negocios, confirma a qué pueblo y categoría quedan asociadas, y apruébalas o recházalas.</p>
+      <h1>Panel de administración</h1>
+      <p>Revisa las solicitudes de convenio de los negocios y consulta todos los usuarios registrados en la plataforma.</p>
     </div>
   </header>
 
@@ -39,6 +39,13 @@
 
     <div class="mensaje-error" id="error-panel"></div>
     <div class="mensaje-exito" id="exito-panel">Cambios guardados correctamente.</div>
+
+    <div class="filtros-estado pestanas-panel" id="pestanas-panel">
+      <button type="button" class="filtro-chip activo" data-pestana="solicitudes">Solicitudes de convenio</button>
+      <button type="button" class="filtro-chip" data-pestana="usuarios">Usuarios registrados</button>
+    </div>
+
+    <section id="seccion-solicitudes">
 
     <div class="filtros-estado" id="filtros-estado">
       <button type="button" class="filtro-chip activo" data-estado="pendiente">Pendientes</button>
@@ -54,6 +61,44 @@
     </div>
 
     <div id="lista-solicitudes" class="lista-solicitudes"></div>
+
+    </section>
+
+    <section id="seccion-usuarios" style="display:none;">
+
+      <div class="barra-usuarios">
+        <input type="search" id="buscar-usuario" placeholder="Buscar por nombre o correo…" />
+        <button type="button" class="boton boton-primario" id="btn-actualizar-usuarios">Actualizar lista</button>
+      </div>
+
+      <div class="filtros-estado" id="filtros-rol">
+        <button type="button" class="filtro-chip activo" data-rol="todos">Todos</button>
+        <button type="button" class="filtro-chip" data-rol="admin">Admins</button>
+        <button type="button" class="filtro-chip" data-rol="socio">Socios</button>
+        <button type="button" class="filtro-chip" data-rol="visitante">Visitantes</button>
+      </div>
+
+      <p class="resumen-usuarios" id="resumen-usuarios"></p>
+
+      <div id="cargando-usuarios" class="estado-carga" style="display:none;">Cargando usuarios…</div>
+      <div id="sin-usuarios" class="estado-carga" style="display:none;">No hay usuarios que coincidan con la búsqueda.</div>
+
+      <div class="tabla-contenedor" id="tabla-contenedor">
+        <table class="tabla-usuarios">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Correo</th>
+              <th>Rol</th>
+              <th>Registro</th>
+            </tr>
+          </thead>
+          <tbody id="cuerpo-usuarios"></tbody>
+        </table>
+      </div>
+
+    </section>
 
   </div>
 
@@ -253,9 +298,9 @@
       renderizarSolicitudes();
     }
 
-    document.querySelectorAll(".filtro-chip").forEach(function (chip) {
+    document.querySelectorAll("#filtros-estado .filtro-chip").forEach(function (chip) {
       chip.addEventListener("click", function () {
-        document.querySelectorAll(".filtro-chip").forEach(function (c) { c.classList.remove("activo"); });
+        document.querySelectorAll("#filtros-estado .filtro-chip").forEach(function (c) { c.classList.remove("activo"); });
         chip.classList.add("activo");
         filtroActual = chip.dataset.estado;
         renderizarSolicitudes();
@@ -263,6 +308,125 @@
     });
 
     cargarSolicitudes();
+
+
+    // ── Usuarios registrados ────────────────────────────────────────────
+    const cuerpoUsuarios = document.getElementById("cuerpo-usuarios");
+    const cargandoUsuarios = document.getElementById("cargando-usuarios");
+    const sinUsuarios = document.getElementById("sin-usuarios");
+    const tablaContenedor = document.getElementById("tabla-contenedor");
+    const resumenUsuarios = document.getElementById("resumen-usuarios");
+    const cajaBuscar = document.getElementById("buscar-usuario");
+
+    let todosLosUsuarios = [];
+    let filtroRol = "todos";
+    let usuariosCargados = false;
+
+    function celda(texto) {
+      const td = document.createElement("td");
+      td.textContent = texto;   // textContent: un nombre con "<" no puede romper la página
+      return td;
+    }
+
+    function renderizarUsuarios() {
+      cuerpoUsuarios.innerHTML = "";
+
+      // Resumen con los totales de TODOS los usuarios (sin filtrar)
+      const total = todosLosUsuarios.length;
+      const admins = todosLosUsuarios.filter(function (u) { return u.rol === "admin"; }).length;
+      const socios = todosLosUsuarios.filter(function (u) { return u.rol === "socio"; }).length;
+      const visitantes = todosLosUsuarios.filter(function (u) { return u.rol === "visitante"; }).length;
+
+      const texto = cajaBuscar.value.trim().toLowerCase();
+      const filtrados = todosLosUsuarios.filter(function (u) {
+        const coincideRol = filtroRol === "todos" || u.rol === filtroRol;
+        const coincideTexto = texto === "" ||
+          (u.nombre || "").toLowerCase().indexOf(texto) !== -1 ||
+          (u.correo || "").toLowerCase().indexOf(texto) !== -1;
+        return coincideRol && coincideTexto;
+      });
+
+      resumenUsuarios.textContent =
+        "Total: " + total + " · Admins: " + admins + " · Socios: " + socios +
+        " · Visitantes: " + visitantes + " · Mostrando: " + filtrados.length;
+
+      if (filtrados.length === 0) {
+        tablaContenedor.style.display = "none";
+        sinUsuarios.style.display = "";
+        return;
+      }
+      tablaContenedor.style.display = "";
+      sinUsuarios.style.display = "none";
+
+      filtrados.forEach(function (u) {
+        const fila = document.createElement("tr");
+        fila.appendChild(celda(u.id));
+        fila.appendChild(celda(u.nombre));
+        fila.appendChild(celda(u.correo));
+
+        const tdRol = document.createElement("td");
+        const chip = document.createElement("span");
+        chip.className = "chip-estado chip-rol-" + u.rol;
+        chip.textContent = u.rol;
+        tdRol.appendChild(chip);
+        fila.appendChild(tdRol);
+
+        // fecha_registro llega como texto "2026-11-16 10:23:45..."; se muestra hasta los minutos
+        fila.appendChild(celda(u.fecha_registro ? u.fecha_registro.slice(0, 16) : "—"));
+        cuerpoUsuarios.appendChild(fila);
+      });
+    }
+
+    function cargarUsuarios() {
+      cargandoUsuarios.style.display = "";
+      tablaContenedor.style.display = "none";
+      sinUsuarios.style.display = "none";
+
+      const resultado = obtenerUsuarios();
+      cargandoUsuarios.style.display = "none";
+
+      if (!resultado.ok) {
+        mostrarError(resultado.error);
+        return false;
+      }
+
+      todosLosUsuarios = resultado.data || [];
+      // Los registrados más recientemente primero
+      todosLosUsuarios.sort(function (a, b) { return b.id - a.id; });
+      usuariosCargados = true;
+      renderizarUsuarios();
+      return true;
+    }
+
+    document.querySelectorAll("#filtros-rol .filtro-chip").forEach(function (chip) {
+      chip.addEventListener("click", function () {
+        document.querySelectorAll("#filtros-rol .filtro-chip").forEach(function (c) { c.classList.remove("activo"); });
+        chip.classList.add("activo");
+        filtroRol = chip.dataset.rol;
+        renderizarUsuarios();
+      });
+    });
+
+    cajaBuscar.addEventListener("input", renderizarUsuarios);
+
+    document.getElementById("btn-actualizar-usuarios").addEventListener("click", function () {
+      if (cargarUsuarios()) mostrarExito("Lista de usuarios actualizada.");
+    });
+
+    // ── Pestañas: Solicitudes de convenio / Usuarios registrados ────────
+    document.querySelectorAll("#pestanas-panel .filtro-chip").forEach(function (pestana) {
+      pestana.addEventListener("click", function () {
+        document.querySelectorAll("#pestanas-panel .filtro-chip").forEach(function (c) { c.classList.remove("activo"); });
+        pestana.classList.add("activo");
+
+        const verUsuarios = pestana.dataset.pestana === "usuarios";
+        document.getElementById("seccion-solicitudes").style.display = verUsuarios ? "none" : "";
+        document.getElementById("seccion-usuarios").style.display = verUsuarios ? "" : "none";
+
+        // La lista se pide al servidor la primera vez que se abre la pestaña
+        if (verUsuarios && !usuariosCargados) cargarUsuarios();
+      });
+    });
   </script>
   <script src="js/nav.js" defer></script>
   <script src="js/fx.js" defer></script>

@@ -421,6 +421,23 @@ function rechazarSolicitudConvenio(solicitudId) {
 }
 
 
+// ── Panel admin: lista de TODOS los usuarios registrados ─────────────────
+// GET /usuarios/ solo responde si el token es de un admin (el backend lo
+// valida con requiere_rol("admin")); a cualquier otro le devuelve 401/403.
+// Devuelve id, nombre, correo, rol y fecha_registro (nunca la contraseña).
+function obtenerUsuarios() {
+  const respuesta = peticionSincronaConToken("GET", "/usuarios/");
+  if (respuesta.error) return { ok: false, error: respuesta.error };
+  if (respuesta.status === 401 || respuesta.status === 403) {
+    return { ok: false, error: "Tu sesión no tiene permisos de administrador. Cierra sesión y vuelve a entrar." };
+  }
+  if (!respuesta.body || !respuesta.body.success) {
+    return { ok: false, error: (respuesta.body && respuesta.body.message) || "No se pudieron cargar los usuarios." };
+  }
+  return { ok: true, data: respuesta.body.data };
+}
+
+
 // ── Recuperación de contraseña ("¿Olvidaste tu contraseña?") ────────────────
 // El backend siempre responde con el mismo mensaje exista o no el correo
 // (para no revelar qué correos están registrados), así que aquí no hay
