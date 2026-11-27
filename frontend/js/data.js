@@ -3,7 +3,9 @@
 // backend en http://127.0.0.1:8000. Si por alguna razón el backend no
 // responde (no está corriendo, sin conexión, etc.) se usan los datos de
 // respaldo de más abajo para que la página nunca se quede vacía.
-const API_BASE_URL_DATOS = "http://127.0.0.1:8000";
+const API_BASE_URL_DATOS = (location.hostname === "127.0.0.1" || location.hostname === "localhost")
+  ? "http://127.0.0.1:8000"
+  : "https://rinconescol-api.onrender.com";
 
 function obtenerJSONSincrono(ruta) {
   const xhr = new XMLHttpRequest();

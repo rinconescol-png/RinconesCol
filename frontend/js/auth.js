@@ -1,7 +1,9 @@
 
 // ── Conexión con el backend real (FastAPI + PostgreSQL) ─────────────────────
 // Cambia esta URL si tu API corre en otro host/puerto.
-const API_BASE_URL = "http://127.0.0.1:8000";
+const API_BASE_URL = (location.hostname === "127.0.0.1" || location.hostname === "localhost")
+  ? "http://127.0.0.1:8000"
+  : "https://rinconescol-api.onrender.com";
 
 const CLAVE_SESION = "rinconescol_sesion";
 
